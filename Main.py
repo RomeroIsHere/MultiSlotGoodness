@@ -40,10 +40,6 @@ class Graph():
         if self.random_order_vertex_list[vertexB] in self.PlayerDict[self.random_order_vertex_list[vertexA]]: 
             return True
         else: 
-            print('candidate A', self.random_order_vertex_list[vertexA])
-            print('candidate B', self.random_order_vertex_list[vertexB])
-            
-            print('List', self.PlayerDict[self.random_order_vertex_list[vertexA]])
             return False
 
     def hamiltonian_cycle_util(self, path:list[int], recurse_depth): 
@@ -99,7 +95,5 @@ class Graph():
 if __name__ == "__main__":
     DictOfPlayers=dict()
     YamlReader.ParseYaml(DictOfPlayers)
-    print(DictOfPlayers)
-    print(DictOfPlayers['a'])
     HamiltonTraveler=Graph(DictOfPlayers)
     HamiltonTraveler.find_hamiltonian_cycle()

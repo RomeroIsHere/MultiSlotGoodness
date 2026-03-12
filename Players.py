@@ -28,12 +28,12 @@ class Player:
         
     def AddIfCompatible(self, Other:Player):
         if(len(list(Other.acceptable_worlds&self.acceptable_worlds))>0):
-            self.CompatiblePlayers.add(Other)
+            self.CompatiblePlayers.add(Other.name)
             return True
         else:
             return False
     def AddToCompatible(self, Other:Player):
-        self.CompatiblePlayers.add(Other)
+        self.CompatiblePlayers.add(Other.name)
     def is_adjacent(self, Other:Player):
         return Other in self.CompatiblePlayers
 
