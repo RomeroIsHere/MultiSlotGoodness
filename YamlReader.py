@@ -1,15 +1,15 @@
 import yaml
 from Players import Player
 
-def ParseYaml(PlayerList:dict[str,Player]):
+def ParseYaml(PlayerList:dict[str,list[str]]):
     with open("DSG-data.yaml") as stream:
         try:
             yamlObject=yaml.safe_load(stream)
-            PlayerList=dict()
+            TempPlayerList=dict()
             PlayerSlotsName =yamlObject.get('SlotName')
             # Add a Player with an ID to use as an index
             for id, Slot in enumerate(PlayerSlotsName):
-                PlayerList[Slot]=(Player(Slot, id))
+                TempPlayerList[Slot]=(Player(Slot, id))
             
             WorldList=dict()
             # For every Candidate world
@@ -19,14 +19,18 @@ def ParseYaml(PlayerList:dict[str,Player]):
                 # Now Add the World Name to Every Player that can play it
                 for Slot in WorldList[AvaibleWorlds]:
                     # could be ignored if no logkeeping or Change in behaviour i guess
-                    PlayerList[Slot].acceptable_worlds.add(AvaibleWorlds)
+                    TempPlayerList[Slot].acceptable_worlds.add(AvaibleWorlds)
                     for Partner in WorldList[AvaibleWorlds]:
-                        PlayerList[Slot].AddToCompatible(PlayerList[Partner])
-            print(PlayerList)
+                        TempPlayerList[Slot].AddToCompatible(TempPlayerList[Partner])
+            for Slot in PlayerSlotsName:
+                TempPlayerList[Slot]
+                PlayerList[Slot]=TempPlayerList[Slot].CompatiblePlayers
+                pass
+            '''print(PlayerList)
             for slots in PlayerSlotsName:
                 print("Current Slot:" + slots)
                 PlayerList[slots].printCompatible()
             print(WorldList)
-
+            '''
         except yaml.YAMLError as exc:
             print(exc)

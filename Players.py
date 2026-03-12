@@ -18,7 +18,7 @@ class Player:
         self.CompatiblePlayers=set()
         #TODO add a way to initialize this from a File or Something
     def __str__(self) -> str:
-        return str(self.id)+".-"+self.name
+        return self.name
     def __repr__(self) -> str:
         return self.__str__()
     def printWorlds(self):
