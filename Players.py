@@ -13,6 +13,10 @@ class Player:
         # Currently random For Dev Purposes
         self.acceptable_worlds={""}
         #TODO add a way to initialize this from a File or Something
+    def __str__(self) -> str:
+        return self.name + ': ' + repr(self.acceptable_worlds)
+    def __repr__(self) -> str:
+        return self.__str__()
     def printWorlds(self):
         print(self.name,self.acceptable_worlds)
 

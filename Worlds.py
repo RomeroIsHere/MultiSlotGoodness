@@ -11,6 +11,10 @@ class World:
         # Currently random For Dev Purposes
         self.players={""}
         #TODO add a way to initialize this from a File or Something
+    def __str__(self) -> str:
+        return self.name + ': ' + repr(self.players)
+    def __repr__(self) -> str:
+        return self.__str__()
     def printPlayers(self):
         print(self.name,self.players)
 
