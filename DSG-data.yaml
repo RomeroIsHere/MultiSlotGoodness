@@ -1,4 +1,7 @@
+# Required
 SlotName: ['Meli', 'a', 's', 'd', 'f', 'g', 'h']
+Worlds: ['HollowKnight', 'CelesteOpenWorld', 'SuperMario64', 'Werecleaner', 'ALinkToThePast', 'Checkfinder', 'Checksmate', 'SimonTathamsPuzzleCollection']
+# Must Be Included in the Worlds Option to be Able to be Read, otherwise Ignored
 HollowKnight: ['a', 's', 'f', 'h']
 CelesteOpenWorld: ['Meli']
 SuperMario64: ['Meli', 'd']
