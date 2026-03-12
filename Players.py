@@ -1,3 +1,4 @@
+from __future__ import annotations
 import random
 class Player:
     '''An Archipelago Player, representing a Singular Slot in the Archipelago
@@ -13,14 +14,28 @@ class Player:
         # Worlds that they Can play
         # Currently random For Dev Purposes
         self.acceptable_worlds=set()
+        # Once Done Parsing, needs to track which Players it's compatible with
+        self.CompatiblePlayers=set()
         #TODO add a way to initialize this from a File or Something
     def __str__(self) -> str:
-        return str(self.id)+".-"+self.name + ': ' + repr(self.acceptable_worlds)
+        return str(self.id)+".-"+self.name
     def __repr__(self) -> str:
         return self.__str__()
     def printWorlds(self):
         print(self.name,self.id,self.acceptable_worlds)
-
+    def printCompatible(self):
+        print(self.name,self.id,self.CompatiblePlayers)
+        
+    def AddIfCompatible(self, Other:Player):
+        if(len(list(Other.acceptable_worlds&self.acceptable_worlds))>0):
+            self.CompatiblePlayers.add(Other)
+            return True
+        else:
+            return False
+    def AddToCompatible(self, Other:Player):
+        self.CompatiblePlayers.add(Other)
+    def is_adjacent(self, Other:Player):
+        return Other in self.CompatiblePlayers
 
 if __name__ == "__main__":
     testing_var_global_world=['alpha','beta','charlie','delta']

@@ -7,7 +7,7 @@ with open("DSG-data.yaml") as stream:
         yamlObject=yaml.safe_load(stream)
         PlayerList=dict()
         PlayerSlotsName =yamlObject.get('SlotName')
-        # Add a Player with an ID to use as an index into the Adjacency matrix
+        # Add a Player with an ID to use as an index
         for id, Slot in enumerate(PlayerSlotsName):
             PlayerList[Slot]=(Player(Slot, id))
         
@@ -19,7 +19,12 @@ with open("DSG-data.yaml") as stream:
             # Now Add the World Name to Every Player that can play it
             for Slot in WorldList[AvaibleWorlds]:
                 PlayerList[Slot].acceptable_worlds.add(AvaibleWorlds)
+                for Partner in WorldList[AvaibleWorlds]:
+                    PlayerList[Slot].AddToCompatible(PlayerList[Partner])
         print(PlayerList)
+        for slots in PlayerSlotsName:
+            print("Current Slot:" + slots)
+            PlayerList[slots].printCompatible()
         print(WorldList)
         
 
