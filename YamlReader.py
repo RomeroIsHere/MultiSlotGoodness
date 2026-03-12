@@ -1,6 +1,6 @@
 import yaml
 from Players import Player
-from Worlds import World
+
 
 with open("DSG-data.yaml") as stream:
     try:
