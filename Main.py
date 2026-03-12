@@ -88,10 +88,6 @@ class Graph():
         for vertex in path: 
             print (vertex )
 
-        '''Arbitrarily prints the elements of an iterable(list, set, tuple, etc...)'''
-        for vertex in path: 
-            print (vertex )
-
 if __name__ == "__main__":
     DictOfPlayers=dict()
     YamlReader.ParseYaml(DictOfPlayers)
