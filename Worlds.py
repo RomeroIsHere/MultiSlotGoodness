@@ -1,19 +1,17 @@
 import random
 class World:
-    '''A World, Storing the Information
+    '''A World, Storing the Information of Players that Can Play them
 
-    To have more than 1 Single-Slot, submit player twice
-
-    keep in mind, for every player, there will be 2 slots created
+    A Player may only Appear once per World, or must be submitted under a different Slot name
     '''
-    def __init__(self,player_name):
-        # Given Slot Name of the Player
-        self.name=player_name
-        # Worlds that they Can play
+    def __init__(self,world_name):
+        # Given World Name
+        self.name=world_name
+        # Players that Can play this World
         # Currently random For Dev Purposes
         self.players={""}
         #TODO add a way to initialize this from a File or Something
-    def printWorlds(self):
+    def printPlayers(self):
         print(self.name,self.players)
 
 # test Gen for Random Players inside each world
@@ -25,7 +23,7 @@ if __name__ == "__main__":
         currentWorld=World(world)
         # for x in range(random.randrange(len(testing_names))):
         currentWorld.players=set(random.choices(testing_names,k=3)) 
-        # has a Chance to pick the same twice, but since it turns into set it does not  duplicate the World name
+        # has a Chance to pick the same twice, but since it turns into set it does not duplicate the players name
         WorldList.append(currentWorld)
     for world in WorldList:
-        world.printWorlds()
+        world.printPlayers()
