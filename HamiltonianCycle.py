@@ -1,12 +1,18 @@
 # Imports
 from typing import Any, Iterable
 # because i want Type hints
+import random
+# So that i's not Always the same
 class Graph(): 
     def __init__(self, vertices:int): 
         # Makes an Epty Adjacency Matrix of the Correct Size
         self.adjacency_matrix = [[0 for column in range(vertices)]
                                     for row in range(vertices)] 
-        self.vertices_count = vertices 
+        self.vertices_count = vertices
+        templist=list(range(1, self.vertices_count))
+        random.shuffle(templist)
+        self.random_vertex = templist
+
 
     def is_safe_to_add(self, path, pos, candidateVertex): 
         '''Check if the Candidate Vertex is a valid Vertex to add to the path
@@ -45,7 +51,7 @@ class Graph():
         if recurse_depth == self.vertices_count:
             return self.is_adjacent(path[recurse_depth-1], path[0])
 
-        for v in range(1, self.vertices_count): 
+        for v in self.random_vertex: 
             if self.is_safe_to_add(path, recurse_depth, v): 
 
                 path[recurse_depth] = v 
@@ -82,10 +88,10 @@ class Graph():
 
 # Example Graphs
 g1 = Graph(5) 
-g1.adjacency_matrix = [ [0, 1, 0, 1, 0], 
+g1.adjacency_matrix = [ [0, 1, 1, 1, 1], 
                         [1, 0, 1, 1, 1], 
-                        [0, 1, 0, 0, 1],
-                        [1, 1, 0, 0, 1], 
-                        [0, 1, 1, 1, 0]]
+                        [1, 1, 0, 1, 1],
+                        [1, 1, 1, 0, 1],
+                        [1, 1, 1, 1, 0]]
 
 g1.find_hamiltonian_cycle()
