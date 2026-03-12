@@ -11,7 +11,7 @@ class Player:
         self.name=player_name
         # Worlds that they Can play
         # Currently random For Dev Purposes
-        self.acceptable_worlds={""}
+        self.acceptable_worlds=set()
         #TODO add a way to initialize this from a File or Something
     def __str__(self) -> str:
         return self.name + ': ' + repr(self.acceptable_worlds)

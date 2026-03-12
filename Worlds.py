@@ -9,7 +9,7 @@ class World:
         self.name=world_name
         # Players that Can play this World
         # Currently random For Dev Purposes
-        self.players={""}
+        self.players=set()
         #TODO add a way to initialize this from a File or Something
     def __str__(self) -> str:
         return self.name + ': ' + repr(self.players)
