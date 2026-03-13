@@ -81,12 +81,11 @@ class Graph():
         self.print_solution(path) 
         return True
     def print_Vertex(self, index):
-        print(self.random_order_vertex_list[index],":",self.PlayerDict[self.random_order_vertex_list[index]])
-        print(self.random_order_vertex_list[index] in self.PlayerDict[self.random_order_vertex_list[index]])
+        print(self.random_order_vertex_list[index])
     def print_solution(self, path:Iterable[Any]):
         '''Arbitrarily prints the elements of an iterable(list, set, tuple, etc...)'''
         for vertex in path: 
-            print (vertex )
+            self.print_Vertex(vertex )
 
 if __name__ == "__main__":
     DictOfPlayers=dict()
