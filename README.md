@@ -1,16 +1,16 @@
 # What's this?
 
-This is a Utility for Planning a Double Slot Goodness Exchange in an Archipelago Multiworld Randomizer
+This is a utility for planning a "Double Slot Goodness" exchange in an [Archipelago Multiworld Randomizer](archipelago.gg)
 
 # How do you use this?
 
-It currently Has No commandline options, so you only Ned to Call the Main file and it will Read the `DSG-data.yaml` file, whereupon it will Spit out either a 'No' or a 'Yes' to let you Know if it Found a Valid Cycle
+It currently has no commandline options, so you only ned to call the main file and it will read the `DSG-data.yaml` file, whereupon it will spit out either a 'no' or a 'yes' to let you know if it found a valid cycle
 
-If it found a valid Cycle, it will give you the Name of the Slots in order, such that the First one on the list will give a slot to the Second, the Second to the Third and so on. The last Slot Name on the cycle will then Give a Slot to the First one in the Cycle
+If it found a valid cycle, it will give you the name of the slots in order, such that the first one on the list will give a slot to the second, the second to the third and so on. The last slot name on the cycle will then give a slot to the first one in the cycle
 
 ## YAML options
 
-The Basic Structure of the YAML file needed is as follows
+The basic structure of the YAML file needed is as follows
 ```yaml
 SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer']
 Worlds:
@@ -18,7 +18,7 @@ Worlds:
     SecondWorld: ['ThirdPlayer','SecondPlayer']
     ThirdWorld: ['FirstPlayer','ThirdPlayer']
 ```
-Alternatively instead of using Flow Collection you could Write it out as
+Alternatively instead of using flow collections you could write it out as
 
 ```yaml
 SlotName: 
@@ -37,73 +37,91 @@ Worlds:
         - 'ThirdPlayer'
 ```
 
-Any name not listed in `SlotName` Shall be ignored for the Cycle creation
+Any name not listed in `SlotName` shall be ignored. 
 
-You May add Any Arbitrary Number of Slots and Worlds, but keep in Mind Large Numbers might take a While, Specially since this is Implemented on Python
+You may add any arbitrary number of slots and worlds, but keep in mind large numbers might take a while, specially since this is implemented on python
 
 # Requirements
 
-- pyyaml, If you have the Archipelago launcher you may already have this installed
+- pyyaml, If you have the [Archipelago launcher](https://github.com/ArchipelagoMW/Archipelago/) you may already have this installed
 
 # FAQ
 
 ## okay... What is Double Slot Goodness?
 
-It is a Very silly idea to share your YAML(Settings for a Randomizer) with another Person in the Same Multiworld Randomizer
+It is a very silly idea to share your yaml(settings for a randomizer) with another person in the same multiworld randomizer
 
-You Submit a YAML for a Game, then everybody also Gives their YAML to somebody Else, or alternatively Submit the Same Yaml twice, then give somebody else the Other slot.
+You submit a yaml for a game, then everybody also gives their yaml to somebody else, or alternatively submit the same yaml twice, then give somebody else the other slot.
 
-This Means that Everybody Plays 2 Slots, Their Original slot, and one That Somebody else made for them, With the Knowledge that the person that is giving the slot is also playing with the Exact Same Settings as them.
+This means that everybody plays 2 slots, their original slot, and one that somebody else made for them, with the knowledge that the person that is giving the slot is also playing with the exact same settings as them.
 
-### What if i can't play the Same game that Somebody else is Playing?
+## What if i can't play the game that somebody else gives me?
 
-This is What this utility intends to Solve. You Share which games you are able or willing to play so that you don't give out or Receive a Game that you are unable to play.
+This is what this utility intends to solve. You share which games you are able or willing to play so that you don't give out or receive a game that you are unable to play.
 
-Keep in Mind The list of game which you are able to PLAY might be Different from the list of games that you will be Able to SUBMIT, since the list of Games you will be able to submit will be the intersection between your own Games and the Games that Somebody else is Able to play. This also Means that More popular Games also have a higher chance of being able to be played.
+Keep in mind the list of game which you are able to **play** might be different from the list of games that you will be able to **submit**, since the list of games you will be able to submit will be the intersection between your own games and the games that somebody else is able to play. This also means that more popular games also have a higher chance of being able to be played.
 
-### This just Sounds like the Secret Yaml Exchange with Extra Steps.
+## This just sounds like the Secret Yaml Exchange with extra steps!
 
-You are Right, this is essentially the Secret Yaml Exchange idea.
+To those who don't know what the Secret Yaml Exchange is, just skip to the next point.
 
-What makes it different (Not Better) are 2 things:
+You are right, this is essentially the secret yaml exchange idea.
 
-1.- The Player that Gives you the YAML Must also play a Game with the Exact same Settings.
+What makes it slightly different are 2 things:
 
-2.- The exchange of YAMLs goes in a big loop, so there are no Isolated group that Give eachother a Game and Receive a Game from the One they gave it to.
+1.- the player that gives you the yaml must also play a game with the exact same settings.
 
-The first point is more a Stylistic Choice, In theory you could just Ignore the Part where you Also need to play with the Same settings as you give out, in which case, everybody would play 1 singular slot, given to them by someone else, however if you did that you would also remove some of the Benefits of doing this way. 
-You won't suffer alone if your Settings turn out to be Horrible, and for the same reason (Assuming the players are of similar skill) you won't receive Settings which Are unnecesarilly Hard.
+2.- the exchange of YAMLs goes in a big loop, so there are no isolated group that give eachother a game and receive a game from the one they gave it to.
 
-The second is more of a Limitation of my Implementation. You could In theory Remove it and the Idea would work just fine, if a bit more Simple and less "Grandiose". however, this also makes it harder to calculate on the fly. it would Certainly be Easier to calculate it by hand in some cases. This tool Considers both of these things when Deciding the Order of Slot Giving.
+The first point is more a stylistic choice, in theory you could just ignore the part where you also need to play with the same settings as you give out, in which case, everybody would play 1 singular slot, given to them by someone else, however if you did that you would also remove some of the benefits of doing this way. 
+You won't suffer alone if your settings turn out to be horrible, and for the same reason (assuming the players are of similar skill) you won't receive settings which are unnecesarilly hard.
 
-## What if i was not included in the Cycle?
+The second is more of a limitation of my implementation. You could in theory remove it and the idea would work just fine, if a bit more simple and less "Grandiose". However, this also makes it harder to calculate on the fly. It would certainly be easier to calculate it by hand in some cases. This tool considers both of these things when deciding the order of slot giving.
 
-This too, is Accounted For. This tool will only Work when Everyone can share and receive to at least one other person. This tool will Tell you Exactly Who to give your YAML to, and who wil give YOU your new YAML. Unless you only Share a Game with one Other Person, you will be Able to Try and Participate.
+Remove both of these changes and you get the Secret Yaml Exchange.
 
-## Does this tool Include Everyone?
+## What if i was not included in the cycle?
 
-this tool Currently Accounts for Everyone you submit to it. If it Cannot Include Everyone EXACTLY ONCE while trying to find a Cycle, then it Will fail.
+This too, is accounted For. This tool will only work when everyone can share and receive to at least one other person. This tool will tell you exactly who to give your YAML to, and who wil give YOU your new YAML. Unless you only share a game with one other person, you should be able to try and participate.
 
-I have plans to Add a Way to Try and Make Multiple Cycles instead of Only one Big one, however that is currently not implemented.
+If the tool does not include everybody, then it fails outright.
 
-## How can i guarantee that This tool will have a Solution?
+## Does this tool include everyone?
 
-the short answer to this is you can't do it easily. thus why i built the tool in the first place.
+This tool currently accounts for everyone you submit to it. If it cannot include everyone ***exactly once*** while trying to find a cycle, then it will fail.
 
-technical answer:The problem is NP-complete, so there are very Few ways you could GUARANTEE it.
+I have plans to add a way to try and make multiple cycles instead of only one big one, however that is currently not implemented.
 
-Technically Correct Solution 0: You may only Submit ONE game, For example "You may only submit Hollow Knight". Since Everybody Has to share 
+## How can i guarantee that this tool will have a solution?
 
-Technically Correct Solution 0.a: Have everybody be able to play the SAME game, for example, Everybody can Play APQuest, so if you make everyone Say they are ABLE to play it, then you could then Just randomize the Names in any Arbitrary order and it would make a valid Cycle. This differs from the first solution, because while technically You'd Be Able to Submit games other than APquest, There is a high Chance that the person You give your YAML to doesn't Share any games with you, and the Person you Receive a YAML from also doesn't share games with you. This would SUCK. It would Limit a LOT of people, and thus would not be Very fun or Interesting.
+The short answer to this is you can't do it easily. Thus why I built the tool in the first place.
 
-Technically Correct Solution 0.b: Make sure Everybody can play a Set of Games(Ideally some of the Many Free games able to be played with archipelago). this is the Same as the Previous 2 Solution, but instead of being Locked into 1 Game, You'd be locked into a Selection of Games. Slightly Better, and Allows more freedom on the players, but it's still Lame and Not Very interesting.
+Technical answer:the problem is np-complete, and is solved using what's essentially trial and error, so there are very few ways you could *guarantee* it.
 
-Technically Correct Solution 1: 
+Technically correct solution 0: you may only submit ***one*** game, for example "You may only submit hollow knight". Since everybody has to share 
 
-For this we need a bit of Maths
+Technically correct solution 0.A: have everybody be able to play the same game, for example, everybody can play apquest, so if you make everyone say they are able to play it, then you could then just randomize the names in any arbitrary order and it would make a valid cycle. This differs from the first solution, because while technically you'd be able to submit games other than apquest, there is a high chance that the person you give your yaml to doesn't share any games with you, and the person you receive a yaml from also doesn't share games with you. This would suck. It would limit a lot of people, and thus would not be very fun or interesting.
 
-Represent Each Player as a Vertex in a Graph.
+Technically correct solution 0.B: make sure everybody can play a set of games(ideally some of the many free games able to be played with archipelago). This is the same as the previous 2 solution, but instead of being locked into 1 game, you'd be locked into a selection of games. Slightly better, and allows more freedom on the players, but it's still limiting and not very interesting.
 
-Connect them to eachother such that if 2 Players have at least 1 Game in common, they have a line connnecting them to eachother
+Technically correct solution 1: Hamiltonian cycles
 
-If they have a Hamiltonian Cycle in the Graph
+For this we need a bit of maths
+
+- Represent each player as a vertex in a graph.
+
+- Connect them to eachother such that if 2 players have at least 1 game in common, they have a line connnecting them to eachother
+
+- If they have a hamiltonian cycle in the graph, then this tool will be able to find a solution.
+
+This is how the tool works internally, so you won't be much faster than it by hand.
+
+Technically correct solution 1.A:4-connected planar graphs and planar triangulations
+
+- There exists a graph representing the players and their compatibility
+- assume the graph is planar. if it is not, remove the connection between nodes that make the graph non-planar.
+- if you are now able to remove ***any*** 3 players without disconnecting the graph (Meaning you can move from one vertex to another following a path) then the graph is 4-connected
+- thanks to William Thomas Tutte, we know that 4-connected planar graphs have a hamiltonian cycle
+I am not personally able to prove the existence of a hamiltonian cycle for a 4-connected planar graph, but somebody else already did, so i don't have to
+
+For more accurate information see the wikipedia article on [finding hamiltonian cycles](https://en.wikipedia.org/wiki/Hamiltonian_path_problem)
