@@ -11,6 +11,7 @@ class Graph():
         # includes all the Vertex By Name
         self.random_order_vertex_list = templist
         self.vertices_count=len(self.random_order_vertex_list)
+        self.finishedPath=list()
 
 
     def is_safe_to_add(self, path, pos, candidateVertex): 
@@ -78,7 +79,8 @@ class Graph():
             return False
         
         print ("Yes\n")
-        self.print_solution(path) 
+        self.finishedPath=path
+        
         return True
     def print_Vertex(self, index:int):
         print(self.random_order_vertex_list[index])
@@ -94,3 +96,9 @@ if __name__ == "__main__":
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
     HamiltonTraveler.find_hamiltonian_cycle()
+    HamiltonTraveler.print_solution(HamiltonTraveler.finishedPath) 
+
+    print('game compatibility:')
+    for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
+        print (HamiltonTraveler.random_order_vertex_list[cur],'->', HamiltonTraveler.random_order_vertex_list[nxt])
+        print(PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds )
