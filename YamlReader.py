@@ -11,26 +11,18 @@ def ParseYaml(PlayerList:dict[str,list[str]]):
             for id, Slot in enumerate(PlayerSlotsName):
                 TempPlayerList[Slot]=(Player(Slot, id))
             
-            WorldList=dict()
-            # For every Candidate world
-            for AvaibleWorlds in yamlObject.get('Worlds'):
-                # Create a New World Entry, with the List of Players in the Dict
-                WorldList[AvaibleWorlds]=(yamlObject.get(AvaibleWorlds))
-                # Now Add the World Name to Every Player that can play it
-                for Slot in WorldList[AvaibleWorlds]:
-                    # could be ignored if no logkeeping or Change in behaviour i guess
-                    TempPlayerList[Slot].acceptable_worlds.add(AvaibleWorlds)
-                    for Partner in WorldList[AvaibleWorlds]:
+            WorldList=yamlObject.get('Worlds')
+            for WorldName in WorldList.keys():
+                for Slot in WorldList[WorldName]:
+                    TempPlayerList[Slot].acceptable_worlds.add(WorldName)
+                    for Partner in WorldList[WorldName]:
                         TempPlayerList[Slot].AddToCompatible(TempPlayerList[Partner])
             for Slot in PlayerSlotsName:
-                TempPlayerList[Slot]
                 PlayerList[Slot]=TempPlayerList[Slot].CompatiblePlayers
-                pass
-            '''print(PlayerList)
-            for slots in PlayerSlotsName:
-                print("Current Slot:" + slots)
-                PlayerList[slots].printCompatible()
-            print(WorldList)
-            '''
         except yaml.YAMLError as exc:
             print(exc)
+if __name__ == "__main__":
+    DictOfPlayers=dict()
+    ParseYaml(DictOfPlayers)
+    print(DictOfPlayers)
+    
