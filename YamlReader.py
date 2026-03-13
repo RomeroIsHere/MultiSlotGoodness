@@ -1,7 +1,7 @@
 import yaml
 from Players import Player
 
-def ParseYaml(PlayerAdjacencyDict:dict[str,list[str]]):
+def ParseYaml(PlayerAdjacencyDict:dict[str,list[str]]) -> dict[str,Player]:
     with open("DSG-data.yaml") as stream:
         try:
             yamlObject=yaml.safe_load(stream)
@@ -22,6 +22,7 @@ def ParseYaml(PlayerAdjacencyDict:dict[str,list[str]]):
             return TempPlayerList
         except yaml.YAMLError as exc:
             print(exc)
+        return dict()
 if __name__ == "__main__":
     DictOfPlayers=dict()
     ParseYaml(DictOfPlayers)
