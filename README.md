@@ -2,6 +2,51 @@
 
 This is a Utility for Planning a Double Slot Goodness Exchange in an Archipelago Multiworld Randomizer
 
+# How do you use this?
+
+It currently Has No commandline options, so you only Ned to Call the Main file and it will Read the `DSG-data.yaml` file, whereupon it will Spit out either a 'No' or a 'Yes' to let you Know if it Found a Valid Cycle
+
+If it found a valid Cycle, it will give you the Name of the Slots in order, such that the First one on the list will give a slot to the Second, the Second to the Third and so on. The last Slot Name on the cycle will then Give a Slot to the First one in the Cycle
+
+## YAML options
+
+The Basic Structure of the YAML file needed is as follows
+```yaml
+SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer']
+Worlds:
+    FirstWorld: ['FirstPlayer','SecondPlayer']
+    SecondWorld: ['ThirdPlayer','SecondPlayer']
+    ThirdWorld: ['FirstPlayer','ThirdPlayer']
+```
+Alternatively instead of using Flow Collection you could Write it out as
+
+```yaml
+SlotName: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+Worlds:
+    FirstWorld: 
+        - 'FirstPlayer'
+        - 'SecondPlayer'
+    SecondWorld:
+        - 'SecondPlayer'
+        - 'ThirdPlayer'
+    ThirdWorld: 
+        - 'FirstPlayer'
+        - 'ThirdPlayer'
+```
+
+Any name not listed in `SlotName` Shall be ignored for the Cycle creation
+
+You May add Any Arbitrary Number of Slots and Worlds, but keep in Mind Large Numbers might take a While, Specially since this is Implemented on Python
+
+# Requirements
+
+- pyyaml, If you have the Archipelago launcher you may already have this installed
+
+# FAQ
+
 ## okay... What is Double Slot Goodness?
 
 It is a Very silly idea to share your YAML(Settings for a Randomizer) with another Person in the Same Multiworld Randomizer
@@ -62,46 +107,3 @@ Represent Each Player as a Vertex in a Graph.
 Connect them to eachother such that if 2 Players have at least 1 Game in common, they have a line connnecting them to eachother
 
 If they have a Hamiltonian Cycle in the Graph
-
-# How do you use this?
-
-It currently Has No commandline options, so you only Ned to Call the Main file and it will Read the `DSG-data.yaml` file, whereupon it will Spit out either a 'No' or a 'Yes' to let you Know if it Found a Valid Cycle
-
-If it found a valid Cycle, it will give you the Name of the Slots in order, such that the First one on the list will give a slot to the Second, the Second to the Third and so on. The last Slot Name on the cycle will then Give a Slot to the First one in the Cycle
-
-## YAML options
-
-The Basic Structure of the YAML file needed is as follows
-```yaml
-SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer']
-Worlds:
-    FirstWorld: ['FirstPlayer','SecondPlayer']
-    SecondWorld: ['ThirdPlayer','SecondPlayer']
-    ThirdWorld: ['FirstPlayer','ThirdPlayer']
-```
-Alternatively instead of using Flow Collection you could Write it out as
-
-```yaml
-SlotName: 
-    - 'FirstPlayer'
-    - 'SecondPlayer'
-    - 'ThirdPlayer'
-Worlds:
-    FirstWorld: 
-        - 'FirstPlayer'
-        - 'SecondPlayer'
-    SecondWorld:
-        - 'SecondPlayer'
-        - 'ThirdPlayer'
-    ThirdWorld: 
-        - 'FirstPlayer'
-        - 'ThirdPlayer'
-```
-
-Any name not listed in `SlotName` Shall be ignored for the Cycle creation
-
-You May add Any Arbitrary Number of Slots and Worlds, but keep in Mind Large Numbers might take a While, Specially since this is Implemented on Python
-
-# Requirements
-
-- pyyaml, If you have the Archipelago launcher you may already have this installed
