@@ -80,9 +80,9 @@ class Graph():
         print ("Yes\n")
         self.print_solution(path) 
         return True
-    def print_Vertex(self, index):
+    def print_Vertex(self, index:int):
         print(self.random_order_vertex_list[index])
-    def print_solution(self, path:Iterable[Any]):
+    def print_solution(self, path:Iterable[int]):
         '''Arbitrarily prints the elements of an iterable(list, set, tuple, etc...)'''
         for vertex in path: 
             self.print_Vertex(vertex )
