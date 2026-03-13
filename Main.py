@@ -88,7 +88,9 @@ class Graph():
             self.print_Vertex(vertex )
 
 if __name__ == "__main__":
-    DictOfPlayers=dict()
-    YamlReader.ParseYaml(DictOfPlayers)
-    HamiltonTraveler=Graph(DictOfPlayers)
+    SlotNamesAdjacencyDict=dict()
+    PlayerDict=YamlReader.ParseYaml()
+    for Slot in PlayerDict.keys():
+        SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
+    HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
     HamiltonTraveler.find_hamiltonian_cycle()
