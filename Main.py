@@ -91,7 +91,7 @@ class Graph():
 
 if __name__ == "__main__":
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=YamlReader.ParseYaml()
+    PlayerDict=YamlReader.ParseDSGYaml()
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
