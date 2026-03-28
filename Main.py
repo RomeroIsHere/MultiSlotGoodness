@@ -97,8 +97,12 @@ if __name__ == "__main__":
     HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
     HamiltonTraveler.find_hamiltonian_cycle()
     HamiltonTraveler.print_solution(HamiltonTraveler.finishedPath) 
-
+    avgCompatibilityLenght=0
     print('game compatibility:')
     for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
         print (HamiltonTraveler.random_order_vertex_list[cur],'->', HamiltonTraveler.random_order_vertex_list[nxt])
-        print(PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds )
+        ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
+        print(ListOfCompatibility)
+        avgCompatibilityLenght+=len(ListOfCompatibility)
+    avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
+    print(avgCompatibilityLenght)
