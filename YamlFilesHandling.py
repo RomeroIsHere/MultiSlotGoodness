@@ -45,7 +45,7 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
                                 if (Partner in PlayerSlotsName):
                                     TempPlayerDict[Slot].AddToCompatible(TempPlayerDict[Partner])
                                 else:
-                                    logger.warning(f"Player {Slot} in World {WorldName} not in Playerlist")
+                                    logger.warning(f"Player {Partner} in World {WorldName} not in Playerlist")
             # Now Get the List of Exclusions
             ExcludeList=yamlObject.get('ExclusionList')
             if not ExcludeList:
