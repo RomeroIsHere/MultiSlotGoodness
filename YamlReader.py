@@ -61,8 +61,6 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
                             else:
                                 if shouldPrint:
                                     print(Partner, "Not in PlayerList")
-                                    
-
                     pass
             return TempPlayerDict
         except yaml.YAMLError as exc:
