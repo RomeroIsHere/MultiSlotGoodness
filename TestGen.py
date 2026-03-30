@@ -30,14 +30,14 @@ if __name__ == "__main__":
     try:
         while True:
             HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
-            HamiltonTraveler.find_hamiltonian_cycle()
-            CumulativeCompatibilityForIteration=0
-            for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
-                ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
-                CumulativeCompatibilityForIteration+=len(ListOfCompatibility)
-            AvgCumulativeCompatibility+=CumulativeCompatibilityForIteration/len(HamiltonTraveler.finishedPath)
-            print(f"Average Compatibility for iteration #{iterationsCount}:{CumulativeCompatibilityForIteration/len(HamiltonTraveler.finishedPath)}")
-            iterationsCount+=1
+            if(HamiltonTraveler.find_hamiltonian_cycle()):
+                CumulativeCompatibilityForIteration=0
+                for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
+                    ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
+                    CumulativeCompatibilityForIteration+=len(ListOfCompatibility)
+                AvgCumulativeCompatibility+=CumulativeCompatibilityForIteration/len(HamiltonTraveler.finishedPath)
+                print(f"Average Compatibility for iteration #{iterationsCount}:{CumulativeCompatibilityForIteration/len(HamiltonTraveler.finishedPath)}")
+                iterationsCount+=1
             pass
             
     except KeyboardInterrupt:
