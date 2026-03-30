@@ -34,6 +34,8 @@ class Player:
             return False
     def AddToCompatible(self, Other:Player):
         self.CompatiblePlayers.add(Other.name)
+    def RemoveCompatible(self, Other:Player):
+        self.CompatiblePlayers.discard(Other.name)
     def is_adjacent(self, Other:Player):
         return Other in self.CompatiblePlayers
 
