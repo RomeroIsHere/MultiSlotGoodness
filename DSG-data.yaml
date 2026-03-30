@@ -1,8 +1,26 @@
 # Required
-SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer']
+SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer', 'FourthPlayer']
 Worlds:
-    FirstWorld: 
-      - 'FirstPlayer'
-      - 'SecondPlayer'
-    SecondWorld: ['ThirdPlayer','SecondPlayer']
-    ThirdWorld: ['FirstPlayer','ThirdPlayer']
+  FirstWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  SecondWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  ThirdWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  FourthWorld:
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+ExclusionList:
+  ArbitraryListName: ['FirstPlayer','FourthPlayer']
+  
