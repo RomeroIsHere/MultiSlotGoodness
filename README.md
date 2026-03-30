@@ -12,11 +12,14 @@ If it found a valid cycle, it will give you the name of the slots in order, such
 
 The basic structure of the YAML file needed is as follows
 ```yaml
-SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer']
+SlotName: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
+ExclusionList:
+  ArbitraryListName: ["FirstPlayer", "FourthPlayer"]
 Worlds:
-    FirstWorld: ['FirstPlayer','SecondPlayer']
-    SecondWorld: ['ThirdPlayer','SecondPlayer']
-    ThirdWorld: ['FirstPlayer','ThirdPlayer']
+  FirstWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
+  SecondWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
+  ThirdWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
+  FourthWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
 ```
 Alternatively instead of using flow collections you could write it out as
 
@@ -25,21 +28,38 @@ SlotName:
     - 'FirstPlayer'
     - 'SecondPlayer'
     - 'ThirdPlayer'
+ExclusionList:
+  ArbitraryListName: 
+    - 'FirstPlayer'
+    - 'FourthPlayer'
 Worlds:
-    FirstWorld: 
-        - 'FirstPlayer'
-        - 'SecondPlayer'
-    SecondWorld:
-        - 'SecondPlayer'
-        - 'ThirdPlayer'
-    ThirdWorld: 
-        - 'FirstPlayer'
-        - 'ThirdPlayer'
+  FirstWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  SecondWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  ThirdWorld: 
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
+  FourthWorld:
+    - 'FirstPlayer'
+    - 'SecondPlayer'
+    - 'ThirdPlayer'
+    - 'FourthPlayer'
 ```
 
 Any name not listed in `SlotName` shall be ignored. 
 
-You may add any arbitrary number of slots and worlds, but keep in mind large numbers might take a while, specially since this is implemented on python
+Any collection in `ExclusionList` will make any `SlotName` be unable to receive and give slots to any other slot in the same list. Useful if you have Player(s) that want to have more than 2 games at a time, but don't want to receive Slots from themselves.
+
+You may add any arbitrary number of `SlotName` and `Worlds` entries, but keep in mind large numbers might take a while, specially since this is implemented on python
 
 # Requirements
 

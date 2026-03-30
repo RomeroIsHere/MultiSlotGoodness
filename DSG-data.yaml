@@ -1,5 +1,7 @@
 # Required
 SlotName: ['FirstPlayer', 'SecondPlayer', 'ThirdPlayer', 'FourthPlayer']
+ExclusionList:
+  ArbitraryListName: ['FirstPlayer','FourthPlayer']
 Worlds:
   FirstWorld: 
     - 'FirstPlayer'
@@ -21,6 +23,5 @@ Worlds:
     - 'SecondPlayer'
     - 'ThirdPlayer'
     - 'FourthPlayer'
-ExclusionList:
-  ArbitraryListName: ['FirstPlayer','FourthPlayer']
+
   
