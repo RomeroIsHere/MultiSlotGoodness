@@ -1,5 +1,8 @@
 import logging
 import yaml
+import os
+import time
+from  Graph import Graph
 from Players import Player
 
 logger=logging.getLogger(__name__)
@@ -64,6 +67,28 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
         except yaml.YAMLError as exc:
             logger.error(exc)
         return dict()
+
+def getFileName() -> str:
+    return str(time.strftime("%Y%m%d-%H%M%S")) + '.yaml'
+
+def WriteFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
+    if not os.path.isdir(outputdir):
+        os.makedirs(outputdir)
+    with open(os.path.join(outputdir,getFileName()), "a") as stream:
+        stream.writelines("Generated Cycle: \n")
+        avgCompatibilityLenght=0
+        for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
+            stream.write(f"  {HamiltonTraveler.random_order_vertex_list[cur]}: \n")
+            stream.write(f"    SendTo: {HamiltonTraveler.random_order_vertex_list[nxt]} \n")
+            stream.write(f"    Chooses:\n")
+            ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
+            for Game in ListOfCompatibility:
+                stream.write(f"      - '{str(Game)}'\n")
+            stream.write('\n')
+            avgCompatibilityLenght+=len(ListOfCompatibility)
+        avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
+        logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
+        pass
 if __name__ == "__main__":
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
     for PlayerName,PlayerObj in ParseDSGYaml(True).items():
