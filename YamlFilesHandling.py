@@ -75,18 +75,16 @@ def WriteFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='ou
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
     with open(os.path.join(outputdir,getFileName()), "a") as stream:
-        stream.writelines("Generated Cycle: \n")
         avgCompatibilityLenght=0
+        dataDict=dict()
         for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
-            stream.write(f"  {HamiltonTraveler.random_order_vertex_list[cur]}: \n")
-            stream.write(f"    SendTo: {HamiltonTraveler.random_order_vertex_list[nxt]} \n")
-            stream.write(f"    Chooses:\n")
             ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
-            for Game in ListOfCompatibility:
-                stream.write(f"      - '{str(Game)}'\n")
-            stream.write('\n')
+            dataDict[HamiltonTraveler.random_order_vertex_list[cur]] = dict()
+            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['SendTo'] = HamiltonTraveler.random_order_vertex_list[nxt]
+            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['Chooses'] = list(ListOfCompatibility)
             avgCompatibilityLenght+=len(ListOfCompatibility)
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
+        yaml.dump(dataDict,stream)
         logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
         pass
 if __name__ == "__main__":
