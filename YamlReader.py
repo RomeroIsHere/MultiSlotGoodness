@@ -1,36 +1,39 @@
+import logging
 import yaml
 from Players import Player
 
+logger=logging.getLogger(__name__)
+
 def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
-    print("Parsing YAML")
-    with open("DSG-data.yaml") as stream:
+    DSGDataPath="DSG-data.yaml"
+    logger.info(f"Parsing YAML {DSGDataPath}")
+    with open(DSGDataPath) as stream:
         try:
             yamlObject=yaml.safe_load(stream)
             TempPlayerDict=dict() # [str,Player]
             PlayerSlotsName =yamlObject.get('SlotName')
-            if shouldPrint:
-                print("Number Of Players:",len(PlayerSlotsName))
+            logger.info(f"Number Of Players:{len(PlayerSlotsName)}")
             # Add a Player with an ID to use as an index
             for id, Slot in enumerate(PlayerSlotsName):
                 TempPlayerDict[Slot]=(Player(Slot, id))
             
             WorldList=yamlObject.get('Worlds')
             if not (WorldList):
-                print("No Worlds?")
+                logger.warning(f"{DSGDataPath} Has no Worlds Registered")
             else:
-                print("Has Worlds")
+                logger.info(f"Found {len(WorldList.keys())} worlds in {DSGDataPath}")
                 for WorldName in WorldList.keys():
-                    if shouldPrint:
-                        print("World:",WorldName)
+                    logger.debug(f"Handling World {WorldName}")
                     for Slot in WorldList[WorldName]:
                         # Check if Slot is One of the Players
                         if not (Slot in PlayerSlotsName):
-                            if shouldPrint:
-                                print("Player not in List:",Slot)
+                            if Slot:
+                                logger.warning(f"Player not in List:{Slot}")
+                            else:
+                                logger.warning(f"Empty World:{WorldName}")
                         else:
                             #Since it is
-                            if shouldPrint:
-                                print("    Player:",Slot)
+                            logger.debug(f"\tPlayer {Slot} in World {WorldName}")
                             # Add it the World to the Player
                             TempPlayerDict[Slot].acceptable_worlds.add(WorldName)
                             
@@ -39,35 +42,30 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
                                 if (Partner in PlayerSlotsName):
                                     TempPlayerDict[Slot].AddToCompatible(TempPlayerDict[Partner])
                                 else:
-                                    if shouldPrint:
-                                        print("Player not in List:",Partner)
+                                    logger.warning(f"Player {Slot} in World {WorldName} not in Playerlist")
             # Now Get the List of Exclusions
             ExcludeList=yamlObject.get('ExclusionList')
             if not ExcludeList:
-                print("No exclusions to take care of")
+                logger.info("No exclusions to take care of")
             else:
-                print("Handling Exclusions")
+                logger.info("Handling Exclusions")
                 for list in ExcludeList.keys():
-                    if shouldPrint:
-                        print("Excluding List:",list)
+                    logger.info(f"Handling Excluding List {list}")
                     for Slot in ExcludeList[list]:
-                        if shouldPrint:
-                            print("Handling:",Slot)
+                        logger.debug(f"Handling Player {Slot}")
                         for Partner in ExcludeList[list]:
-                            if shouldPrint:
-                                print("Excluding Partner:",Partner)
+                            logger.debug(f"Excluding Partner {Partner} From Player {Slot}")
                             if (Partner in PlayerSlotsName):
                                 TempPlayerDict[Slot].RemoveCompatible(TempPlayerDict[Partner])
                             else:
-                                if shouldPrint:
-                                    print(Partner, "Not in PlayerList")
+                                logger.warning(f"Player {Partner} Not in Player list")
                     pass
             return TempPlayerDict
         except yaml.YAMLError as exc:
-            print(exc)
+            logger.error(exc)
         return dict()
 if __name__ == "__main__":
-    DictOfPlayers=dict()
+    logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
     for PlayerName,PlayerObj in ParseDSGYaml(True).items():
                 if isinstance(PlayerObj, Player):
                     print(PlayerName,":",len(PlayerObj.CompatiblePlayers))

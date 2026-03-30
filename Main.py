@@ -1,7 +1,13 @@
+import logging
 import YamlReader
 from Players import Player
 import random
 from typing import Any, Iterable
+import os
+import time
+
+logger=logging.getLogger(__name__)
+
 class Graph(): 
     def __init__(self, PlayerDict:dict[str,list[str]]): 
         # Makes an Epty Adjacency Matrix of the Correct Size
@@ -75,34 +81,42 @@ class Graph():
         path[0] = 0
         
         if not self.hamiltonian_cycle_util(path, 1): 
-            print ("No\n")
+            logger.error("No Appropiate Path found")
             return False
         
-        print ("Yes\n")
+        logger.info("Appropiate Path Found")
         self.finishedPath=path
         
         return True
-    def print_Vertex(self, index:int):
-        print(self.random_order_vertex_list[index])
-    def print_solution(self, path:Iterable[int]):
-        '''Arbitrarily prints the elements of an iterable(list, set, tuple, etc...)'''
-        for vertex in path: 
-            self.print_Vertex(vertex )
-
+def getFileName() -> str:
+    return str(time.strftime("%Y%m%d-%H%M%S")) + '.yaml'
+def WriteFile(HamiltonTraveler:Graph, outputdir='output'):
+    if not os.path.isdir(outputdir):
+        os.makedirs(outputdir)
+    with open(os.path.join(outputdir,getFileName()), "a") as stream:
+        stream.writelines("Generated Cycle\n")
+        avgCompatibilityLenght=0
+        for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
+            stream.write(f"{HamiltonTraveler.random_order_vertex_list[cur]} ->  {HamiltonTraveler.random_order_vertex_list[nxt]} \n")
+            ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
+            stream.write(f"{str(ListOfCompatibility)}\n\n")
+            avgCompatibilityLenght+=len(ListOfCompatibility)
+        avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
+        logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
+        pass
 if __name__ == "__main__":
+    logging.basicConfig(filename='logs/main.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s]%(name)s:%(levelname)s %(message)s',  datefmt='%I:%M:%S')
+    logger.info("Starting Application")
     SlotNamesAdjacencyDict=dict()
     PlayerDict=YamlReader.ParseDSGYaml()
+    logger.info("Succesfully got PlayerDict")
+    logger.debug("Turning PlayerDict into and Adjacency Dict")
+
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
-    HamiltonTraveler.find_hamiltonian_cycle()
-    HamiltonTraveler.print_solution(HamiltonTraveler.finishedPath) 
-    avgCompatibilityLenght=0
-    print('game compatibility:')
-    for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
-        print (HamiltonTraveler.random_order_vertex_list[cur],'->', HamiltonTraveler.random_order_vertex_list[nxt])
-        ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
-        print(ListOfCompatibility)
-        avgCompatibilityLenght+=len(ListOfCompatibility)
-    avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
-    print(avgCompatibilityLenght)
+    logger.info("Finding Cycle")
+    if HamiltonTraveler.find_hamiltonian_cycle():
+        logger.info("Found Hamiltonian Cycle")
+        logger.info("Writing to file")
+        WriteFile(HamiltonTraveler)
