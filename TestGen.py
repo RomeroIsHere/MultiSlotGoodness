@@ -1,8 +1,8 @@
 from Main import Graph
-import YamlReader
+import YamlFilesHandling
 def mainTest():
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=YamlReader.ParseDSGYaml()
+    PlayerDict=YamlFilesHandling.ParseDSGYaml()
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     AvgCumulativeCompatibility=0
@@ -22,7 +22,7 @@ def mainTest():
 
 if __name__ == "__main__":
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=YamlReader.ParseDSGYaml()
+    PlayerDict=YamlFilesHandling.ParseDSGYaml()
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     AvgCumulativeCompatibility=0
