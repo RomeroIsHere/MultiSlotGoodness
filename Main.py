@@ -20,4 +20,6 @@ if __name__ == "__main__":
     if HamiltonTraveler.find_hamiltonian_cycle():
         logger.info("Found Hamiltonian Cycle")
         logger.info("Writing to file")
-        YamlFilesHandling.WriteFile(HamiltonTraveler, PlayerDict)
+        OutputFile = YamlFilesHandling.WriteYAMLOutFile(HamiltonTraveler, PlayerDict)
+        logger.info(f"Wrote Cycle as YAML to {OutputFile}")
+        YamlFilesHandling.WriteCSVFile(OutputFile)

@@ -1,5 +1,6 @@
 import logging
 import yaml
+import csv
 import os
 import time
 from  Graph import Graph
@@ -71,10 +72,11 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
 def getFileName() -> str:
     return str(time.strftime("%Y%m%d-%H%M%S")) + '.yaml'
 
-def WriteFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
+def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
-    with open(os.path.join(outputdir,getFileName()), "a") as stream:
+    OutputYamlPath=os.path.join(outputdir,getFileName())
+    with open(OutputYamlPath, "a") as stream:
         avgCompatibilityLenght=0
         dataDict=dict()
         for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
@@ -86,7 +88,24 @@ def WriteFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='ou
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
         yaml.dump(dataDict,stream)
         logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
-        pass
+        return OutputYamlPath
+
+    
+
+def WriteCSVFile(CycleYaml='output/output.yaml', CycleCSVPath='output/OutputCSV.dsv'):
+    PlayerSlotsName = dict()
+    with open(CycleYaml) as outputCycleStream:
+        with open(CycleCSVPath, 'w') as CSVOutStream:
+            try:
+                yamlObject=yaml.safe_load(outputCycleStream)
+                if isinstance(PlayerSlotsName ,list):
+                    PlayerSlotsName.sort()
+                for id, Slot in sorted(enumerate(yamlObject),  key=lambda x: x[1].lower()):
+                    CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
+            except yaml.YAMLError as exc:
+                print(exc)
+    
+
 if __name__ == "__main__":
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
     for PlayerName,PlayerObj in ParseDSGYaml(True).items():
