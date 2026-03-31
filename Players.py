@@ -1,5 +1,6 @@
 from __future__ import annotations
 import random
+GLOBAL_GAME_VARIETY_COUNT=1
 class Player:
     '''An Archipelago Player, representing a Singular Slot in the Archipelago
 
@@ -16,7 +17,7 @@ class Player:
         self.acceptable_worlds=set()
         # Once Done Parsing, needs to track which Players it's compatible with
         self.CompatiblePlayers=set()
-        #TODO add a way to initialize this from a File or Something
+        self.CompatiblePlayersScoreKeeper=dict()
     def __str__(self) -> str:
         return self.name
     def __repr__(self) -> str:
@@ -33,12 +34,20 @@ class Player:
         else:
             return False
     def AddToCompatible(self, Other:Player):
-        self.CompatiblePlayers.add(Other.name)
+        if Other.name in self.CompatiblePlayersScoreKeeper:
+            self.CompatiblePlayersScoreKeeper[Other.name]+=1
+        else:
+            self.CompatiblePlayersScoreKeeper[Other.name]=0
+        if self.CompatiblePlayersScoreKeeper[Other.name] > GLOBAL_GAME_VARIETY_COUNT:
+            self.CompatiblePlayers.add(Other.name)
     def RemoveCompatible(self, Other:Player):
         self.CompatiblePlayers.discard(Other.name)
     def is_adjacent(self, Other:Player):
         return Other in self.CompatiblePlayers
-
+def UpdateGlobalVarietyCount(VarietyScore= 0):
+    global GLOBAL_GAME_VARIETY_COUNT
+    GLOBAL_GAME_VARIETY_COUNT = VarietyScore
+    pass
 if __name__ == "__main__":
     testing_var_global_world=['alpha','beta','charlie','delta']
     testing_names=['alice','bob','cassandra','daryl','esther','frank']

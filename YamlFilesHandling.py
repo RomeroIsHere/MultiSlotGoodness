@@ -4,6 +4,7 @@ import csv
 import os
 import time
 from  Graph import Graph
+import Players
 from Players import Player
 
 logger=logging.getLogger(__name__)
@@ -20,7 +21,7 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
             # Add a Player with an ID to use as an index
             for id, Slot in enumerate(PlayerSlotsName):
                 TempPlayerDict[Slot]=(Player(Slot, id))
-            
+            Players.UpdateGlobalVarietyCount(yamlObject.get('MinimumGameVarietyScore', 0))
             WorldList=yamlObject.get('Worlds')
             if not (WorldList):
                 logger.warning(f"{DSGDataPath} Has no Worlds Registered")
