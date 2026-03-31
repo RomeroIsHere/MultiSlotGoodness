@@ -21,7 +21,7 @@ def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
             # Add a Player with an ID to use as an index
             for id, Slot in enumerate(PlayerSlotsName):
                 TempPlayerDict[Slot]=(Player(Slot, id))
-            Players.UpdateGlobalVarietyCount(yamlObject.get('MinimumGameVarietyScore', 0))
+            Players.UpdateGlobalVarietyCount(yamlObject.get('MinimumGameVarietyScore', -1))
             WorldList=yamlObject.get('Worlds')
             if not (WorldList):
                 logger.warning(f"{DSGDataPath} Has no Worlds Registered")
