@@ -111,5 +111,5 @@ if __name__ == "__main__":
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
     for PlayerName,PlayerObj in ParseDSGYaml(True).items():
                 if isinstance(PlayerObj, Player):
-                    print(PlayerName,":",len(PlayerObj.CompatiblePlayers))
+                    print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
     
