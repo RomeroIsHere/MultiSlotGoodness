@@ -37,8 +37,8 @@ class Player:
         if Other.name in self.CompatiblePlayersScoreKeeper:
             self.CompatiblePlayersScoreKeeper[Other.name]+=1
         else:
-            self.CompatiblePlayersScoreKeeper[Other.name]=0
-        if self.CompatiblePlayersScoreKeeper[Other.name] > GLOBAL_GAME_VARIETY_COUNT:
+            self.CompatiblePlayersScoreKeeper[Other.name]=1
+        if self.CompatiblePlayersScoreKeeper[Other.name] >= GLOBAL_GAME_VARIETY_COUNT:
             self.CompatiblePlayers.add(Other.name)
     def RemoveCompatible(self, Other:Player):
         self.CompatiblePlayers.discard(Other.name)
