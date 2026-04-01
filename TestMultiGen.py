@@ -1,4 +1,4 @@
-from Main import Graph
+from Models import Graph
 from DSGFileHandler import YamlFilesHandling
 def mainTest(iterationMax=1000):
     SlotNamesAdjacencyDict=dict()
