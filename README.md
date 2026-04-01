@@ -15,8 +15,6 @@ For more information and Common Question You might have consider Reading the [FA
 The basic structure of the YAML file needed is as follows
 ```yaml
 SlotName: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
-ExclusionList:
-  ArbitraryListName: ["FirstPlayer", "FourthPlayer"]
 Worlds:
   FirstWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
   SecondWorld: ["FirstPlayer", "SecondPlayer", "ThirdPlayer", "FourthPlayer"]
@@ -30,26 +28,19 @@ SlotName:
     - 'FirstPlayer'
     - 'SecondPlayer'
     - 'ThirdPlayer'
-ExclusionList:
-  ArbitraryListName: 
-    - 'FirstPlayer'
-    - 'FourthPlayer'
 Worlds:
   FirstWorld: 
     - 'FirstPlayer'
     - 'SecondPlayer'
-    - 'ThirdPlayer'
     - 'FourthPlayer'
   SecondWorld: 
     - 'FirstPlayer'
-    - 'SecondPlayer'
     - 'ThirdPlayer'
     - 'FourthPlayer'
   ThirdWorld: 
     - 'FirstPlayer'
     - 'SecondPlayer'
     - 'ThirdPlayer'
-    - 'FourthPlayer'
   FourthWorld:
     - 'FirstPlayer'
     - 'SecondPlayer'
@@ -59,9 +50,44 @@ Worlds:
 
 Any name not listed in `SlotName` shall be ignored. 
 
+You may add any arbitrary number of `SlotName` and `Worlds` entries, but keep in mind large numbers might take a while, specially since this is implemented on python
+
+## Additional Option
+
+These are options that Will be Ignored if Not Included in your `DSG-data.yaml`. They extend the basic Functionality for actual Use Cases
+
+### Exclusion Lists
+
+```yaml
+ExclusionList:
+  ArbitraryListName: 
+    - 'FirstPlayer'
+    - 'FourthPlayer'
+```
 Any collection in `ExclusionList` will make any `SlotName` be unable to receive and give slots to any other slot in the same list. Useful if you have Player(s) that want to have more than 2 games at a time, but don't want to receive Slots from themselves.
 
-You may add any arbitrary number of `SlotName` and `Worlds` entries, but keep in mind large numbers might take a while, specially since this is implemented on python
+In this Example `FirstPlayer` and `FourthPlayer` will be unable to give eachother any Slots, from any game, even if they're Both included in a World inside `Worlds`. This does not Stop them from giving Anyone else any slot in those Games.
+
+### Game Variety Enforcer
+
+```yaml
+MinimumGameVarietyScore: 0
+```
+> [!NOTE]
+> The Default for this is 0. It will Let Compatibility Calculation Run through Normally.
+> Pulling this to 1 will make it behave identically but Start taking into account the number of Compatible Games
+> With values 2 and above it will start culling player compatibility lower than the value set.
+
+This will make it So that For 2 People to be able to Give eachother a Slot they MUST have at least `MinimumGameVarietyScore` Number of Games in Common.
+
+If you have a highly connected group This Option Can give you a Slot with a Higher Average Compatibility between players.
+
+In a More Sparsely Connected Group it might not be Worth it to Pull this Higher.
+
+
+> [!CAUTION]
+> This option might make it Fully impossible for you to Generate a Cycle if you set it high Enough, If your Generation is Taking too long or It fails, Consider Lowering this or Leaving it In default
+
 
 # Requirements
 
