@@ -18,6 +18,8 @@ class Player:
         # Once Done Parsing, needs to track which Players it's compatible with
         self.CompatiblePlayers=set()
         self.CompatiblePlayersScoreKeeper=dict()
+        self.HasBeenVisited=False
+        self.DegreeOf=-1
     def __str__(self) -> str:
         return self.name
     def __repr__(self) -> str:
