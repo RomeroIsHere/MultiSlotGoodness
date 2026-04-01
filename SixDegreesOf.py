@@ -67,7 +67,6 @@ if __name__ =="__main__":
         LogMaxDegree(PlayerDict,DiameterDict)
         ResetDegrees(PlayerDict)
         pass
-    DegreesOf(PlayerDict)
     for name, player in DiameterDict.items():
        
        print(f'{name}: {player}')
