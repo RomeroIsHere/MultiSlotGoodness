@@ -3,14 +3,14 @@ import yaml
 import csv
 import os
 import time
-from  Graph import Graph
-import Players
-from Players import Player
+from Models import Graph
+import Models.Players as Players
+from Models import Player
 
 logger=logging.getLogger(__name__)
 
-def ParseDSGYaml(shouldPrint=False) -> dict[str,Player]:
-    DSGDataPath="DSG-data.yaml"
+def ParseDSGYaml(DSGDataPath="DSG-data.yaml") -> dict[str,Player]:
+    
     logger.info(f"Parsing YAML {DSGDataPath}")
     with open(DSGDataPath) as stream:
         try:
@@ -109,7 +109,7 @@ def WriteCSVFile(CycleYaml='output/output.yaml', CycleCSVPath='output/OutputCSV.
 
 if __name__ == "__main__":
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
-    for PlayerName,PlayerObj in ParseDSGYaml(True).items():
+    for PlayerName,PlayerObj in ParseDSGYaml().items():
                 if isinstance(PlayerObj, Player):
                     print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
     
