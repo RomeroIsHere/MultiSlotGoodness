@@ -6,7 +6,7 @@ from . import OutputHandler
 
 logger=logging.getLogger(__name__)
 
-def ParseDSGYaml(DSGDataPath="DSG-data.yaml") -> dict[str,Player]:
+def ParseDSGYaml(DSGDataPath="Players/DSG-data.yaml") -> dict[str,Player]:
     
     logger.info(f"Parsing YAML {DSGDataPath}")
     with open(DSGDataPath) as stream:
