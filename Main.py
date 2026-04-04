@@ -1,14 +1,15 @@
 import logging
-from DSGFileHandler import YamlFilesHandling
+from DSGFileHandler import DSGYamlHandling, OutputHandler
 from Models import Graph
 
 logger=logging.getLogger(__name__)
 
 if __name__ == "__main__":
+    OutputHandler.MakeLogDir()
     logging.basicConfig(filename='logs/main.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s]%(name)s:%(levelname)s %(message)s',  datefmt='%I:%M:%S')
     logger.info("Starting Application")
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=YamlFilesHandling.ParseDSGYaml()
+    PlayerDict=DSGYamlHandling.ParseDSGYaml()
     logger.info("Succesfully got PlayerDict")
     logger.debug("Turning PlayerDict into and Adjacency Dict")
 
@@ -19,6 +20,6 @@ if __name__ == "__main__":
     if HamiltonTraveler.find_hamiltonian_cycle():
         logger.info("Found Hamiltonian Cycle")
         logger.info("Writing to file")
-        OutputFile = YamlFilesHandling.WriteYAMLOutFile(HamiltonTraveler, PlayerDict)
+        OutputFile = OutputHandler.WriteYAMLOutFile(HamiltonTraveler, PlayerDict)
         logger.info(f"Wrote Cycle as YAML to {OutputFile}")
-        YamlFilesHandling.WriteCSVFile(OutputFile)
+        OutputHandler.WriteCSVFile(OutputFile, OutputFile + '.dsv')
