@@ -68,7 +68,8 @@ def ParseDSGYaml(DSGDataPath="Players/DSG-data.yaml") -> dict[str,Player]:
         return dict()
 
 
-    
+def ParseRenameYaml():
+    pass
 
 if __name__ == "__main__":
     OutputHandler.MakeLogDir()
