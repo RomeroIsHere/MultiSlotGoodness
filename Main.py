@@ -1,7 +1,6 @@
 import logging
-import YamlFilesHandling
-from Players import Player
-from Graph import Graph
+from DSGFileHandler import YamlFilesHandling
+from Models import Graph
 
 logger=logging.getLogger(__name__)
 
