@@ -1,6 +1,6 @@
 import logging
-from Players import Player
-import YamlFilesHandling
+from Models import Player
+from DSGFileHandler import YamlFilesHandling
 from typing import Any
 
 logger=logging.getLogger(__name__)
