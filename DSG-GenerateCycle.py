@@ -1,5 +1,5 @@
 import logging
-from DSGFileHandler import DSGYamlHandling, OutputHandler
+from DSGFileHandler import InputHandler, OutputHandler
 from Models import Graph
 
 logger=logging.getLogger(__name__)
@@ -9,7 +9,7 @@ if __name__ == "__main__":
     logging.basicConfig(filename='logs/main.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s]%(name)s:%(levelname)s %(message)s',  datefmt='%I:%M:%S')
     logger.info("Starting Application")
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=DSGYamlHandling.ParseDSGYaml()
+    PlayerDict=InputHandler.ParseDSGYaml()
     logger.info("Succesfully got PlayerDict")
     logger.debug("Turning PlayerDict into and Adjacency Dict")
 
