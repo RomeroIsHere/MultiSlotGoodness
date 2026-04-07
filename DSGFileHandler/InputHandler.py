@@ -85,8 +85,7 @@ def ParseRenameYaml(DSGRenamePath="YAML/DSG-rename.yaml") -> dict:
 if __name__ == "__main__":
     Utility.MakeDir("logs")
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
-    # for PlayerName,PlayerObj in ParseDSGYaml().items():
-    #             if isinstance(PlayerObj, Player):
-    #                 print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
-    ParseRenameYaml()
+    for PlayerName,PlayerObj in ParseDSGYaml().items():
+                 if isinstance(PlayerObj, Player):
+                     print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
     
