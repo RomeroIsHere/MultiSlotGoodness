@@ -1,8 +1,8 @@
 from Models import Graph
-from DSGFileHandler import YamlFilesHandling
+from DSGFileHandler import InputHandler
 def mainTest(iterationMax=1000):
     SlotNamesAdjacencyDict=dict()
-    PlayerDict=YamlFilesHandling.ParseDSGYaml()
+    PlayerDict=InputHandler.ParseDSGYaml()
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
     AvgCumulativeCompatibility=0
