@@ -1,23 +1,17 @@
 import logging
+import shutil
+from sympy import false
 import yaml
 import os
-from datetime import datetime
 from Models import Graph
 from Models import Player
+from . import Utility
 logger = logging.getLogger(__name__)
-
-
-def getFileName() -> str:
-    return str(datetime.now().strftime('%Y-%m-%d-%H%M%S%f')[:-3]) + '.yaml'
-
-def MakeLogDir(outputdir='logs'):
-    if not os.path.isdir(outputdir):
-        os.makedirs(outputdir)
 
 def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
-    OutputYamlPath=os.path.join(outputdir,getFileName())
+    OutputYamlPath=os.path.join(outputdir, Utility.getFileName())
     with open(OutputYamlPath, "w") as stream:
         avgCompatibilityLenght=0
         dataDict=dict()
@@ -46,3 +40,29 @@ def WriteCSVFile(CycleYaml='output/output.yaml', CycleCSVPath='output/OutputCSV.
                     CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
             except yaml.YAMLError as exc:
                 print(exc)
+
+def CopyDirTree(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
+    Utility.MakeDir(PlayerYamlsDir)
+    Utility.MakeDir(RenamedYamlsDir)
+    shutil.copytree(PlayerYamlsDir,RenamedYamlsDir, dirs_exist_ok=True)
+
+
+def RenameAndCopyYAML(RenamerDict:dict,PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
+    CopyDirTree(PlayerYamlsDir, RenamedYamlsDir)
+    for _, _, files in os.walk(RenamedYamlsDir):
+        for file in files:
+            fileWithPath=os.path.join(RenamedYamlsDir, file)
+            YamlObject=None
+            with open(fileWithPath) as APYAMLStream:
+                try:
+                    YamlObject=yaml.safe_load(APYAMLStream)
+                    SlotName=YamlObject.get("name")
+                    if SlotName in RenamerDict:
+                        YamlObject["name"]=RenamerDict[SlotName]
+                except:
+                    pass
+            with open(fileWithPath, "w") as APYAMLStrem:
+                try:
+                    yaml.dump(YamlObject, APYAMLStrem, sort_keys=false)
+                except:
+                    pass

@@ -1,9 +1,10 @@
 import logging
+from sympy import false
 import yaml
+from DSGFileHandler import Utility
 import Models.Players as Players
 from Models import Player
-from . import OutputHandler
-
+import shutil
 logger=logging.getLogger(__name__)
 
 def ParseDSGYaml(DSGDataPath="YAML/DSG-data.yaml") -> dict[str,Player]:
@@ -68,13 +69,24 @@ def ParseDSGYaml(DSGDataPath="YAML/DSG-data.yaml") -> dict[str,Player]:
         return dict()
 
 
-def ParseRenameYaml():
+def ParseRenameYaml(DSGRenamePath="YAML/DSG-rename.yaml") -> dict:
+    logger.info(f"Parsing YAML {DSGRenamePath}")
+    with open(DSGRenamePath) as stream:
+        try:
+            yamlObject=yaml.safe_load(stream)
+            print(yamlObject)
+            if(isinstance(yamlObject, dict)):
+                return yamlObject
+        except yaml.YAMLError as exc:
+            logger.error(exc)
+        return dict()
     pass
 
 if __name__ == "__main__":
-    OutputHandler.MakeLogDir()
+    Utility.MakeDir("logs")
     logging.basicConfig(filename='logs/YamlParsing.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s] %(levelname)s %(message)s',  datefmt='%I:%M:%S')
-    for PlayerName,PlayerObj in ParseDSGYaml().items():
-                if isinstance(PlayerObj, Player):
-                    print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
+    # for PlayerName,PlayerObj in ParseDSGYaml().items():
+    #             if isinstance(PlayerObj, Player):
+    #                 print(f"{PlayerName}: {len(PlayerObj.CompatiblePlayers)}")
+    ParseRenameYaml()
     

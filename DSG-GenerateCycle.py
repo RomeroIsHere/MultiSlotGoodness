@@ -1,11 +1,11 @@
 import logging
-from DSGFileHandler import InputHandler, OutputHandler
+from DSGFileHandler import InputHandler, OutputHandler, Utility
 from Models import Graph
 
 logger=logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    OutputHandler.MakeLogDir()
+    Utility.MakeDir("logs")
     logging.basicConfig(filename='logs/main.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s]%(name)s:%(levelname)s %(message)s',  datefmt='%I:%M:%S')
     logger.info("Starting Application")
     SlotNamesAdjacencyDict=dict()
