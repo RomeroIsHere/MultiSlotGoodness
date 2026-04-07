@@ -74,7 +74,7 @@ def ParseRenameYaml(DSGRenamePath="YAML/DSG-rename.yaml") -> dict:
     with open(DSGRenamePath) as stream:
         try:
             yamlObject=yaml.safe_load(stream)
-            print(yamlObject)
+            logger.debug(yamlObject)
             if(isinstance(yamlObject, dict)):
                 return yamlObject
         except yaml.YAMLError as exc:
