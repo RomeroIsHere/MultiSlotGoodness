@@ -4,9 +4,15 @@ This is a utility for planning a "Double Slot Goodness" exchange in an [Archipel
 
 # How do you use this?
 
-It currently has no commandline options, so you only ned to call the main file and it will read the `DSG-data.yaml` file, whereupon it will spit out either a 'no' or a 'yes' to let you know if it found a valid cycle
+It currently has no commandline options, so you only ned to call the main file and select 'Generate Cycle', which will read the `DSG-data.yaml` file inside the `YAML` Folder, whereupon it will spit out a file in the `output` folder, to let you know if it found a valid cycle. Using This will let you know who will give a YAML to whom
 
 If it found a valid cycle, it will give you the name of the slots in order, such that the first one on the list will give a slot to the second, the second to the third and so on. The last slot name on the cycle will then give a slot to the first one in the cycle
+
+If you want to Rename Collected YAMLs. you will need to fill `DSG-rename.yaml` with the renaming Rules suchs as
+```yaml
+OriginalName: Renamed
+AnotherOriginalName: Renamed
+```
 
 For more information and Common Question You might have consider Reading the [FAQ](FAQ.md)
 
