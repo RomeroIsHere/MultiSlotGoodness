@@ -2,6 +2,19 @@
 
 This is a utility for planning a "Double Slot Goodness" exchange in an [Archipelago Multiworld Randomizer](archipelago.gg)
 
+# Installation
+
+You currently need to run this Tool from Source 
+```sh
+git clone https://github.com/RomeroIsHere/MultiSlotGoodness.git
+pip install pyyaml
+cd MultiSlotgoodness
+```
+then run via
+```sh
+py main.py
+```
+
 # How do you use this?
 
 It currently has no commandline options, so you only ned to call the main file and select 'Generate Cycle', which will read the `DSG-data.yaml` file inside the `YAML` Folder, whereupon it will spit out a file in the `output` folder, to let you know if it found a valid cycle. Using This will let you know who will give a YAML to whom
