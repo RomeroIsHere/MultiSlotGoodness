@@ -24,6 +24,7 @@ def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], output
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
         yaml.dump(dataDict,stream)
         logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
+        print(f"Wrote File to {OutputYamlPath}")
         return OutputYamlPath
 
     
