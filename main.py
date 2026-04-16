@@ -1,4 +1,5 @@
 import logging
+import DSGManualGameCompatibility
 from Menu import Menu
 from Models import Player
 from DSGFileHandler import OutputHandler, InputHandler, Utility
@@ -15,6 +16,8 @@ if __name__ == "__main__":
         ('Check Number of Compatible Partner', InputHandler.CompatiblePlayers),
         ('Generate Cycle', DSGGenerateCycle.GenerateCycle),
         ('Rename Collected Yamls', DSGRenamePlayerFiles.RenameYamls),
+        ('Manually Check Players', DSGManualGameCompatibility.Main),
         ('Test Average Game Compatibility of Cycles', DSGTestAverageCompatibility.mainTest)
+
     ]
     Menu.menu("Double Slot Goodness Tool",listOfActions)
