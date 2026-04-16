@@ -82,6 +82,15 @@ def ParseRenameYaml(DSGRenamePath="YAML/DSG-rename.yaml") -> dict:
         return dict()
     pass
 
+def ParseCycleYamls(DSGCyclePath="YAML/DSG-cycle.yaml") -> dict:
+    CycleDict = dict()
+    with open(DSGCyclePath) as outputCycleStream:
+        try:
+            CycleDict=yaml.safe_load(outputCycleStream)
+        except yaml.YAMLError as exc:
+            print(exc)
+    return CycleDict
+
 def CompatiblePlayers():
     for PlayerName,PlayerObj in ParseDSGYaml().items():
                  if isinstance(PlayerObj, Player):

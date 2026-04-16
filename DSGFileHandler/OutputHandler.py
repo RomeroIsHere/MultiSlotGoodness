@@ -3,6 +3,7 @@ import shutil
 from sympy import false
 import yaml
 import os
+from DSGFileHandler import InputHandler
 from Models import Graph
 from Models import Player
 from . import Utility
@@ -31,16 +32,15 @@ def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], output
 
 def WriteCSVFile(CycleYaml='output/output.yaml', CycleCSVPath='output/OutputCSV.dsv'):
     PlayerSlotsName = dict()
-    with open(CycleYaml) as outputCycleStream:
-        with open(CycleCSVPath, 'w') as CSVOutStream:
-            try:
-                yamlObject=yaml.safe_load(outputCycleStream)
-                if isinstance(PlayerSlotsName ,list):
-                    PlayerSlotsName.sort()
-                for id, Slot in sorted(enumerate(yamlObject),  key=lambda x: x[1].lower()):
-                    CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
-            except yaml.YAMLError as exc:
-                print(exc)
+    yamlObject=InputHandler.ParseCycleYamls(CycleYaml)
+    with open(CycleCSVPath, 'w') as CSVOutStream:
+        try:
+            if isinstance(PlayerSlotsName ,list):
+                PlayerSlotsName.sort()
+            for id, Slot in sorted(enumerate(yamlObject),  key=lambda x: x[1].lower()):
+                CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
+        except yaml.YAMLError as exc:
+            print(exc)
 
 def CopyDirTree(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
     Utility.MakeDir(PlayerYamlsDir)
