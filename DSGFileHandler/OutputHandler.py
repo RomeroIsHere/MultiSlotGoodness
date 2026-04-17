@@ -9,10 +9,13 @@ from Models import Player
 from . import Utility
 logger = logging.getLogger(__name__)
 
-def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
+def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], OutputFilename:str="",outputdir='output'):
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
-    OutputYamlPath=os.path.join(outputdir, Utility.getFileName())
+    if not OutputFilename:
+        OutputYamlPath=os.path.join(outputdir, Utility.getFileName())
+    else:
+        OutputYamlPath=os.path.join(outputdir, OutputFilename)
     with open(OutputYamlPath, "w") as stream:
         avgCompatibilityLenght=0
         dataDict=dict()

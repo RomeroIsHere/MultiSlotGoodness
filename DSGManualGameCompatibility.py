@@ -1,3 +1,5 @@
+from itertools import cycle
+
 from Menu import Menu
 import logging
 from DSGFileHandler import InputHandler, OutputHandler, Utility
@@ -6,6 +8,26 @@ from DSGFileHandler import InputHandler, OutputHandler, Utility
 from Models import Player
 
 logger=logging.getLogger(__name__)
+
+def ListCycle():
+    CycleDict=InputHandler.ParseCycleYamls()
+    
+    AllSlots=list(CycleDict)
+    AlreadyVisitedSet: set[str]=set()
+    StartingSlot=CurrSlot=AllSlots[0]
+    PlayerInfoDict=CycleDict.get(StartingSlot)
+    NextSlot=''
+    if isinstance(PlayerInfoDict,dict):
+        NextSlot=PlayerInfoDict.get('SendTo')
+    
+    while not (StartingSlot == NextSlot):
+        PlayerInfoDict=CycleDict.get(CurrSlot)
+        if isinstance(PlayerInfoDict,dict):
+            NextSlot=PlayerInfoDict.get('SendTo')
+        print(f"{CurrSlot} -> {NextSlot}")
+        CurrSlot=NextSlot
+        pass
+    pass
 
 def getPlayerInput(PlayersDict=InputHandler.ParseDSGYaml(), PlayerID:str="Player") -> Player | None:
     Player=input(f"Name Of {PlayerID}:")
@@ -77,7 +99,7 @@ def Main():
         ('List all Players', ListAllPlayers),
         ("List Player's Games", ListPlayerGames),
         ("List 2 Player's Compatibility", ListPlayerCompatibles),
-        ("List Cycle from File", Menu.emptyCallable),
+        ("List Cycle from File", ListCycle),
     ]
     Menu.menu('\nManual Player Game Compatibility',listOfActions)
     pass
