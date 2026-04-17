@@ -31,7 +31,7 @@ class Graph():
             self.random_order_vertex_list=sorted(self.random_order_vertex_list,key=self.biased)
 
 
-    def is_safe_to_add(self, path, pos, candidateVertex): 
+    def is_safe_to_add(self, path:list[str|int], pos:str, candidateVertex:str): 
         '''Check if the Candidate Vertex is a valid Vertex to add to the path
         
         a) The candidate vertex is adjacent to the latest path vertex
@@ -43,7 +43,7 @@ class Graph():
         if not self.is_adjacent(pos, candidateVertex):
             return False
 
-        for vertex in path: 
+        for vertex in path:
             if vertex == candidateVertex: 
                 return False
 
@@ -60,7 +60,7 @@ class Graph():
         else: 
             return False
 
-    def hamiltonian_cycle_util(self, path:list[str|int], recurse_depth): 
+    def hamiltonian_cycle_util(self, path:list[str|int], recurse_depth:int): 
         '''Recursive function to check Hamiltonian cycle
         Recursion stops when Recursion Depth (recurse_depth) is Equal to the number of Vertices in the Graph, then:
             Returns True if the Final vertex is adjacent to first
@@ -68,9 +68,9 @@ class Graph():
         # Check if You've traversed all nodes by checking Depth to the Total Number of Vertices
         if recurse_depth == self.vertices_count:
             if isinstance(path[0],str):
-                return self.is_adjacent(path[recurse_depth-1], path[0])
-        for v,name in enumerate(self.random_order_vertex_list):
-            if self.is_safe_to_add(path, path[recurse_depth-1], name): 
+                return self.is_adjacent(str(path[recurse_depth-1]), path[0])
+        for name in self.random_order_vertex_list:
+            if self.is_safe_to_add(path, str(path[recurse_depth-1]), name): 
 
                 path[recurse_depth] = name
 
