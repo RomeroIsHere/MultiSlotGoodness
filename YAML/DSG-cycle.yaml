@@ -1,0 +1,28 @@
+FirstPlayer:
+  Chooses:
+  - FirstWorld
+  - FourthWorld
+  - ThirdWorld
+  - SecondWorld
+  SendTo: SecondPlayer
+FourthPlayer:
+  Chooses:
+  - FirstWorld
+  - FourthWorld
+  - ThirdWorld
+  - SecondWorld
+  SendTo: ThirdPlayer
+SecondPlayer:
+  Chooses:
+  - FirstWorld
+  - FourthWorld
+  - ThirdWorld
+  - SecondWorld
+  SendTo: FourthPlayer
+ThirdPlayer:
+  Chooses:
+  - FirstWorld
+  - FourthWorld
+  - ThirdWorld
+  - SecondWorld
+  SendTo: FirstPlayer
