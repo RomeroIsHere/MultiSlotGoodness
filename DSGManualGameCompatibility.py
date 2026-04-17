@@ -1,19 +1,13 @@
-from itertools import cycle
-
 from Menu import Menu
 import logging
-from DSGFileHandler import InputHandler, OutputHandler, Utility
-
-
+from DSGFileHandler import InputHandler, Utility
 from Models import Player
 
 logger=logging.getLogger(__name__)
 
 def ListCycle():
     CycleDict=InputHandler.ParseCycleYamls()
-    
     AllSlots=list(CycleDict)
-    AlreadyVisitedSet: set[str]=set()
     StartingSlot=CurrSlot=AllSlots[0]
     PlayerInfoDict=CycleDict.get(StartingSlot)
     NextSlot=''
@@ -104,7 +98,6 @@ def Main():
         ("List Cycle from File", ListCycle),
     ]
     Menu.menu('\nManual Player Game Compatibility',listOfActions)
-    pass
 
 
 if __name__ == "__main__":
