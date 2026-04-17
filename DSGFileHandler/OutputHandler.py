@@ -20,10 +20,10 @@ def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], Output
         avgCompatibilityLenght=0
         dataDict=dict()
         for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
-            ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]] = dict()
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['SendTo'] = HamiltonTraveler.random_order_vertex_list[nxt]
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['Chooses'] = list(ListOfCompatibility)
+            ListOfCompatibility = PlayerDict[str(cur)].acceptable_worlds & PlayerDict[str(nxt)].acceptable_worlds
+            dataDict[cur] = dict()
+            dataDict[cur]['SendTo'] = nxt
+            dataDict[cur]['Chooses'] = list(ListOfCompatibility)
             avgCompatibilityLenght+=len(ListOfCompatibility)
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
         yaml.dump(dataDict,stream)

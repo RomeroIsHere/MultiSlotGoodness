@@ -6,6 +6,7 @@ logger=logging.getLogger(__name__)
 
 def GenerateCycle():
     logger.info("Starting Generation")
+    print("Starting Generation")
     SlotNamesAdjacencyDict=dict()
     PlayerDict=InputHandler.ParseDSGYaml()
     logger.info("Succesfully got PlayerDict")
@@ -13,15 +14,19 @@ def GenerateCycle():
 
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
-    HamiltonTraveler=Graph(SlotNamesAdjacencyDict)
+    HamiltonTraveler=Graph(SlotNamesAdjacencyDict, key=lambda x: x)
     logger.info("Finding Cycle")
+    print("Finding Cycle")
     if HamiltonTraveler.find_hamiltonian_cycle():
         logger.info("Found Hamiltonian Cycle")
         logger.info("Writing to file")
+        print("Found Cycle")
         OutputFile = OutputHandler.WriteYAMLOutFile(HamiltonTraveler, PlayerDict)
         OutputHandler.WriteYAMLOutFile(HamiltonTraveler, PlayerDict, OutputFilename="DSG-cycle.yaml", outputdir="YAML")
         logger.info(f"Wrote Cycle as YAML to {OutputFile}")
         OutputHandler.WriteCSVFile(OutputFile, OutputFile + '.dsv')
+    else:
+        print("\n\n**NO CYCLE FOUND**\n\n")
 
 if __name__ == "__main__":
     Utility.MakeDir("logs")
