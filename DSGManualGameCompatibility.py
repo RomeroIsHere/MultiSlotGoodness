@@ -29,7 +29,9 @@ def ListCycle():
         pass
     pass
 
-def getPlayerInput(PlayersDict=InputHandler.ParseDSGYaml(), PlayerID:str="Player") -> Player | None:
+def getPlayerInput(PlayersDict, PlayerID:str="Player") -> Player | None:
+    if not PlayersDict:
+        PlayersDict= InputHandler.ParseDSGYaml()
     Player=input(f"Name Of {PlayerID}:")
     PlayerObj=PlayersDict.get(Player)
     if not PlayerObj:
