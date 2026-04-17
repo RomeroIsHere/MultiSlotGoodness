@@ -1,19 +1,16 @@
 import logging
-from sympy import false
 import yaml
 from DSGFileHandler import Utility
 import Models.Players as Players
 from Models import Player
-import shutil
 logger=logging.getLogger(__name__)
 
-def ParseDSGYaml(DSGDataPath="YAML/DSG-data.yaml") -> dict[str,Player]:
-    
+def ParseDSGYaml(DSGDataPath="YAML/DSG-data.yaml") -> dict[str,Player]: 
     logger.info(f"Parsing YAML {DSGDataPath}")
     with open(DSGDataPath) as stream:
         try:
             yamlObject=yaml.safe_load(stream)
-            TempPlayerDict=dict() # [str,Player]
+            TempPlayerDict: dict[str,Player]=dict() # [str,Player]
             PlayerSlotsName =yamlObject.get('SlotName')
             logger.info(f"Number Of Players:{len(PlayerSlotsName)}")
             # Add a Player with an ID to use as an index
@@ -59,7 +56,7 @@ def ParseDSGYaml(DSGDataPath="YAML/DSG-data.yaml") -> dict[str,Player]:
                         for Partner in ExcludeList[list]:
                             logger.debug(f"Excluding Partner {Partner} From Player {Slot}")
                             if (Partner in PlayerSlotsName):
-                                TempPlayerDict[Slot].RemoveCompatible(TempPlayerDict[Partner])
+                                TempPlayerDict.get(Slot,Player("Empty",-1)).RemoveCompatible(TempPlayerDict[Partner])
                             else:
                                 logger.warning(f"Player {Partner} Not in Player list")
                     pass
@@ -81,6 +78,15 @@ def ParseRenameYaml(DSGRenamePath="YAML/DSG-rename.yaml") -> dict:
             logger.error(exc)
         return dict()
     pass
+
+def ParseCycleYamls(DSGCyclePath="YAML/DSG-cycle.yaml") -> dict:
+    CycleDict = dict()
+    with open(DSGCyclePath) as outputCycleStream:
+        try:
+            CycleDict=yaml.safe_load(outputCycleStream)
+        except yaml.YAMLError as exc:
+            print(exc)
+    return CycleDict
 
 def CompatiblePlayers():
     for PlayerName,PlayerObj in ParseDSGYaml().items():

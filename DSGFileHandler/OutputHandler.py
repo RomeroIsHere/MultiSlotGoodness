@@ -3,15 +3,19 @@ import shutil
 from sympy import false
 import yaml
 import os
+from DSGFileHandler import InputHandler
 from Models import Graph
 from Models import Player
 from . import Utility
 logger = logging.getLogger(__name__)
 
-def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], outputdir='output'):
+def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], OutputFilename:str="",outputdir='output'):
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
-    OutputYamlPath=os.path.join(outputdir, Utility.getFileName())
+    if not OutputFilename:
+        OutputYamlPath=os.path.join(outputdir, Utility.getFileName())
+    else:
+        OutputYamlPath=os.path.join(outputdir, OutputFilename)
     with open(OutputYamlPath, "w") as stream:
         avgCompatibilityLenght=0
         dataDict=dict()
@@ -24,22 +28,22 @@ def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], output
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
         yaml.dump(dataDict,stream)
         logger.info(f"The Average Compatibility of This Generation is {avgCompatibilityLenght}")
+        print(f"Wrote File to {OutputYamlPath}")
         return OutputYamlPath
 
     
 
 def WriteCSVFile(CycleYaml='output/output.yaml', CycleCSVPath='output/OutputCSV.dsv'):
     PlayerSlotsName = dict()
-    with open(CycleYaml) as outputCycleStream:
-        with open(CycleCSVPath, 'w') as CSVOutStream:
-            try:
-                yamlObject=yaml.safe_load(outputCycleStream)
-                if isinstance(PlayerSlotsName ,list):
-                    PlayerSlotsName.sort()
-                for id, Slot in sorted(enumerate(yamlObject),  key=lambda x: x[1].lower()):
-                    CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
-            except yaml.YAMLError as exc:
-                print(exc)
+    yamlObject=InputHandler.ParseCycleYamls(CycleYaml)
+    with open(CycleCSVPath, 'w') as CSVOutStream:
+        try:
+            if isinstance(PlayerSlotsName ,list):
+                PlayerSlotsName.sort()
+            for id, Slot in sorted(enumerate(yamlObject),  key=lambda x: x[1].lower()):
+                CSVOutStream.write(f"{Slot}..{yamlObject[Slot]['SendTo']}...{yamlObject[Slot]['Chooses']}\n")
+        except yaml.YAMLError as exc:
+            print(exc)
 
 def CopyDirTree(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
     Utility.MakeDir(PlayerYamlsDir)

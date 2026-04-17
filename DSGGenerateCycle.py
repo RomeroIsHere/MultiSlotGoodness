@@ -19,6 +19,7 @@ def GenerateCycle():
         logger.info("Found Hamiltonian Cycle")
         logger.info("Writing to file")
         OutputFile = OutputHandler.WriteYAMLOutFile(HamiltonTraveler, PlayerDict)
+        OutputHandler.WriteYAMLOutFile(HamiltonTraveler, PlayerDict, OutputFilename="DSG-cycle.yaml", outputdir="YAML")
         logger.info(f"Wrote Cycle as YAML to {OutputFile}")
         OutputHandler.WriteCSVFile(OutputFile, OutputFile + '.dsv')
 
