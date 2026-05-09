@@ -1,10 +1,11 @@
 import logging
 from DSGFileHandler import InputHandler, OutputHandler, Utility
 from Models import Graph
+from typing import Any, Callable
 
 logger=logging.getLogger(__name__)
 
-def GenerateCycle():
+def GenerateCycle(key:Callable[[str], Any]|None=lambda x:x):
     logger.info("Starting Generation")
     print("Starting Generation")
     SlotNamesAdjacencyDict=dict()
@@ -14,7 +15,7 @@ def GenerateCycle():
 
     for Slot in PlayerDict.keys():
         SlotNamesAdjacencyDict[Slot]=PlayerDict[Slot].CompatiblePlayers
-    HamiltonTraveler=Graph(SlotNamesAdjacencyDict, key=lambda x: x)
+    HamiltonTraveler=Graph(SlotNamesAdjacencyDict, key=key)
     logger.info("Finding Cycle")
     print("Finding Cycle")
     if HamiltonTraveler.find_hamiltonian_cycle():
