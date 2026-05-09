@@ -28,8 +28,8 @@ class Graph():
         self.vertices_count=len(self.random_order_vertex_list)
         self.finishedPath=list()
         if self.biased:
+            logger.info(f"Using Sorting Key")
             self.random_order_vertex_list=sorted(self.random_order_vertex_list,key=self.biased)
-
 
     def is_safe_to_add(self, path:list[str|int], pos:str, candidateVertex:str): 
         '''Check if the Candidate Vertex is a valid Vertex to add to the path
