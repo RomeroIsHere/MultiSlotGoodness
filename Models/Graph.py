@@ -7,16 +7,16 @@ class Graph():
         """
         Takes in a dict of Player Names and their Compatible players
 
-        Optional Generation Biasing by 
+        Optional Generation Biasing by Parameter key.
+
+        using key Sorting is Absolute, if you want to Keep randomization supply jitter within Key function
 
         Parameters
         ----------
         PlayerDict : dict[str,list[str]]
             dict where keys are the Name of a player, and values are a list of the players it can Share a worlds with
-
-        word_list : list[str]
-            The list of words to test input_word against for similarity
-
+        key : Callable[[str], Any]
+            Sorting Key used via sorted(list,key)
         """
         # Makes an Epty Adjacency Matrix of the Correct Size
         self.biased=key
