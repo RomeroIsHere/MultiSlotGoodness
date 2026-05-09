@@ -89,8 +89,6 @@ def ListAllPlayers():
     pass
 
 def Main():
-    print(f"Functionality Not Integrated Yet")
-    logger.error(f"Functionality Not Integrated Yet")
     listOfActions=[
         ('List all Players', ListAllPlayers),
         ("List Player's Games", ListPlayerGames),
