@@ -5,7 +5,7 @@ from typing import Any, Callable
 
 logger=logging.getLogger(__name__)
 
-def GenerateCycle(key:Callable[[str], Any]|None=lambda x:x):
+def GenerateCycle(key:Callable[[str], Any]|None=None):
     logger.info("Starting Generation")
     print("Starting Generation")
     SlotNamesAdjacencyDict=dict()
