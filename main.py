@@ -1,7 +1,6 @@
 import logging
 import DSGManualGameCompatibility
 from Menu import Menu
-from Models import Player
 from DSGFileHandler import OutputHandler, InputHandler, Utility
 import DSGTestAverageCompatibility, DSGGenerateCycle, DSGRenamePlayerFiles
 
@@ -14,7 +13,7 @@ if __name__ == "__main__":
     logging.basicConfig(filename='logs/main.log', encoding='utf-8', level=logging.INFO, format='[%(asctime)s]%(name)s:%(levelname)s %(message)s',  datefmt='%I:%M:%S')
     listOfActions=[
         ('Check Number of Compatible Partner', InputHandler.CompatiblePlayers),
-        ('Generate Cycle', DSGGenerateCycle.GenerateCycle),
+        ('Generate Cycle', DSGGenerateCycle.GenerationMenu),
         ('Rename Collected Yamls', DSGRenamePlayerFiles.RenameYamls),
         ('Manually Check Players', DSGManualGameCompatibility.Main),
         ('Test Average Game Compatibility of Cycles', DSGTestAverageCompatibility.mainTest)

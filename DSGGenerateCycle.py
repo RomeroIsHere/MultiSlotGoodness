@@ -1,9 +1,44 @@
 import logging
+from os import close
 from DSGFileHandler import InputHandler, OutputHandler, Utility
-from Models import Graph
+from Models import Graph, Player
+from Menu import Menu
 from typing import Any, Callable
 
 logger=logging.getLogger(__name__)
+
+def GenerationMenu():
+    print(f"Functionality Not Integrated Yet")
+    logger.error(f"Functionality Not Integrated Yet")
+    listOfActions=[
+        ('Generate Random Compatible Cycle', GenerateCycle),
+        ("Generate Alphabetized Bias Cycle", GenerateAlphabetizedCycle),
+        ("Generate # Game Count Bias Cycle", GenerateGameCount),
+        ("Generate Compatibility Bias Cycle", GenerateGameCompatibility),
+    ]
+    Menu.menu('\nHamiltonian Path Generation',listOfActions)
+
+    pass
+
+def GenerateAlphabetizedCycle():
+    GenerateCycle(lambda x:x)
+
+
+def GenerateGameCount():
+    PlayerDict=InputHandler.ParseDSGYaml()
+    def Closure(x:str):
+        return len(PlayerDict.get(x,Player("Unknown",-1)).acceptable_worlds)
+    GenerateCycle(Closure)
+
+def GenerateGameCompatibility():
+    PlayerDict=InputHandler.ParseDSGYaml()
+    def Closure(x:str):
+        key=0
+        for playerob in PlayerDict.values():
+            key+=len(playerob.acceptable_worlds.intersection(PlayerDict.get(x,Player("Unknown",-1)).acceptable_worlds))
+        print(key)
+        return key
+    GenerateCycle(Closure)
 
 def GenerateCycle(key:Callable[[str], Any]|None=None):
     logger.info("Starting Generation")
