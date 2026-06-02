@@ -84,6 +84,8 @@ def RenameAndStripYAML(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Co
                         gameName=mini.get("game")
                         FullOptionSet=mini.get(gameName)
                         FullOptionSet.pop("plando_items",None)
+                        FullOptionSet.pop("local_items",None)
+                        FullOptionSet.pop("priority_locations",None)
                         mini[gameName]=FullOptionSet
                         SpecificYamlObjectsList.append(mini)
                 except Exception as e:
