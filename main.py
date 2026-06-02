@@ -2,7 +2,7 @@ import logging
 import DSGManualGameCompatibility
 from Menu import Menu
 from DSGFileHandler import OutputHandler, InputHandler, Utility
-import DSGTestAverageCompatibility, DSGGenerateCycle, DSGRenamePlayerFiles
+import DSGTestAverageCompatibility, DSGGenerateCycle, DSGRenamePlayerFiles, SYEREmovePlando
 
 def RenameYamls():
     renamedict=InputHandler.ParseRenameYaml()
@@ -15,6 +15,7 @@ if __name__ == "__main__":
         ('Check Number of Compatible Partner', InputHandler.CompatiblePlayers),
         ('Generate Cycle', DSGGenerateCycle.GenerationMenu),
         ('Rename Collected Yamls', DSGRenamePlayerFiles.RenameYamls),
+        ('Strip Plando Blocks from Collected Yamls', SYEREmovePlando.StripPlando),
         ('Manually Check Players', DSGManualGameCompatibility.Main),
         ('Test Average Game Compatibility of Cycles', DSGTestAverageCompatibility.mainTest)
 
