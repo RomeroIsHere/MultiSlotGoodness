@@ -1,7 +1,6 @@
 import logging
 import shutil
 from typing import Iterator
-from sympy import false
 import yaml
 import os
 from DSGFileHandler import InputHandler
@@ -68,7 +67,7 @@ def RenameAndCopyYAML(RenamerDict:dict,PlayerYamlsDir="YAML/Originals", RenamedY
                     pass
             with open(fileWithPath, "w") as APYAMLStrem:
                 try:
-                    yaml.dump(YamlObject, APYAMLStrem, sort_keys=false)
+                    yaml.dump(YamlObject, APYAMLStrem, sort_keys=False)
                 except:
                     pass
 def RenameAndStripYAML(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
@@ -95,6 +94,6 @@ def RenameAndStripYAML(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Co
                     pass
             with open(fileWithPath, "w") as APYAMLStrem:
                 try:
-                    yaml.dump_all(SpecificYamlObjectsList, APYAMLStrem, sort_keys=false)
+                    yaml.dump_all(SpecificYamlObjectsList, APYAMLStrem, sort_keys=False)
                 except:
                     pass
