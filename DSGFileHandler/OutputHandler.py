@@ -1,5 +1,6 @@
 import logging
 import shutil
+from typing import Iterator
 from sympy import false
 import yaml
 import os
@@ -20,10 +21,10 @@ def WriteYAMLOutFile(HamiltonTraveler:Graph, PlayerDict:dict[str,Player], Output
         avgCompatibilityLenght=0
         dataDict=dict()
         for cur, nxt in zip (HamiltonTraveler.finishedPath, HamiltonTraveler.finishedPath [1:] + [ HamiltonTraveler.finishedPath[0]] ):
-            ListOfCompatibility = PlayerDict[HamiltonTraveler.random_order_vertex_list[cur]].acceptable_worlds & PlayerDict[HamiltonTraveler.random_order_vertex_list[nxt]].acceptable_worlds
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]] = dict()
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['SendTo'] = HamiltonTraveler.random_order_vertex_list[nxt]
-            dataDict[HamiltonTraveler.random_order_vertex_list[cur]]['Chooses'] = list(ListOfCompatibility)
+            ListOfCompatibility = PlayerDict[str(cur)].acceptable_worlds & PlayerDict[str(nxt)].acceptable_worlds
+            dataDict[cur] = dict()
+            dataDict[cur]['SendTo'] = nxt
+            dataDict[cur]['Chooses'] = list(ListOfCompatibility)
             avgCompatibilityLenght+=len(ListOfCompatibility)
         avgCompatibilityLenght/=len(HamiltonTraveler.finishedPath)
         yaml.dump(dataDict,stream)
@@ -68,5 +69,32 @@ def RenameAndCopyYAML(RenamerDict:dict,PlayerYamlsDir="YAML/Originals", RenamedY
             with open(fileWithPath, "w") as APYAMLStrem:
                 try:
                     yaml.dump(YamlObject, APYAMLStrem, sort_keys=false)
+                except:
+                    pass
+def RenameAndStripYAML(PlayerYamlsDir="YAML/Originals", RenamedYamlsDir="YAML/Copy"):
+    CopyDirTree(PlayerYamlsDir, RenamedYamlsDir)
+    for _, _, files in os.walk(RenamedYamlsDir):
+        for file in files:
+            fileWithPath=os.path.join(RenamedYamlsDir, file)
+            YamlObjectGenerator:Iterator|None=None
+            SpecificYamlObjectsList:list=list()
+            with open(fileWithPath) as APYAMLStream:
+                try:
+                    YamlObjectGenerator=yaml.safe_load_all(APYAMLStream)
+                    for mini in YamlObjectGenerator:
+                        gameName=mini.get("game")
+                        FullOptionSet=mini.get(gameName)
+                        FullOptionSet.pop("plando_items",None)
+                        mini[gameName]=FullOptionSet
+                        SpecificYamlObjectsList.append(mini)
+                except Exception as e:
+                    print(f"Error at {fileWithPath}")
+                    print(f"Error is {e}")
+                    logger.error(f"Error at {fileWithPath}")
+                    logger.error(f"Error is {e}")
+                    pass
+            with open(fileWithPath, "w") as APYAMLStrem:
+                try:
+                    yaml.dump_all(SpecificYamlObjectsList, APYAMLStrem, sort_keys=false)
                 except:
                     pass
